@@ -16,7 +16,7 @@ def topics_from_to(start, end):
     inFile = topic_num_file
     
     # fill the path where distances are stored
-    distance_dirpath = path.join(root_path, 'graph_horizontal', 'distance')
+    distance_dirpath = path.join(root_path, 'graph_horizontal/distance')
     distance_files = fileSys.traverseDirectory(distance_dirpath, [start, end])[1:]
     
     fun = 0
