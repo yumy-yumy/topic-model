@@ -1,9 +1,9 @@
 import numpy as np
 from numpy import cumsum
-import fileSys
-import ioFile
+from src.backend import fileSys
+from src import ioFile
 
-def createNode(filenames, clf_topic_stat=None):  
+def createNode(filenames, clf_topic_stat=None):
     nodes = []
     for fname in filenames:
         topics = ioFile.load_object(fname)
@@ -14,18 +14,18 @@ def createNode(filenames, clf_topic_stat=None):
             for clf_topic in clf_topic_stat:
                 for index in clf_topic.keys():
                     nodes.append({"name": ' '.join(topics[index])})
-                
-    print "finish creating nodes"            
+
+    print "finish creating nodes"
     return nodes
-    
+
 '''
-fun=0, horizontal graph; fun=1, vertical graph; fun=2, class 
+fun=0, horizontal graph; fun=1, vertical graph; fun=2, class
 '''
-def createLink(filenames, topic_num, fun, clf_topic_stat=None):    
+def createLink(filenames, topic_num, fun, clf_topic_stat=None):
     # start index of each year
     node_index = cumsum(topic_num).tolist()[:-1]
     node_index.insert(0, 0)
-    
+
     links = []
     i = 0
     for fname in filenames:
@@ -52,24 +52,24 @@ def createLink(filenames, topic_num, fun, clf_topic_stat=None):
                 index = index.intersection(set(clf_topic_stat[i+1].keys()))
                 for index_j in index:
                     links.append({"source": node_index_i+index_i, "target": node_index_j+index_j, "value": count})
-           
-        i += 1              
-                
-    print "finish creating links"            
+
+        i += 1
+
+    print "finish creating links"
     return links
-        
+
 def topicNum(inFile, fun):
     num = []
     if fun == 0:
-        filenames = fileSys.traverseDirectory(inFile) 
+        filenames = fileSys.traverseDirectory(inFile)
         for fname in filenames:
             data_iterator = ioFile.statFromFile(fname)
             for line in data_iterator:
                 n = int(line[0])
-            num.append(n)  
+            num.append(n)
     elif fun == 1:
         data_iterator = inFile
         for line in data_iterator:
             num.append(int(line[0]))
-        
+
     return np.array(num)

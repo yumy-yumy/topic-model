@@ -1,0 +1,16 @@
+{
+  "name": "topics",
+  "version": "0.0.0",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "~4.4.0",
+    "jquery-ui": "~1.11.4"
+  }
+}

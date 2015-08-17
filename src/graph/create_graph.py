@@ -117,9 +117,9 @@ if __name__ == "__main__":
             sys.exit('System will exit')
             
     if options.distance is None:
-            link_dirpath = sys.stdin
+            distance_dirpath = sys.stdin
     elif options.distance is not None:
-            link_dirpath = options.distance
+            distance_dirpath = options.distance
     else:
             print 'No distance directory specified, system with exit\n'
             sys.exit('System will exit')
@@ -144,7 +144,7 @@ if __name__ == "__main__":
     
     topic_num = topicNum(inFile, fun)
     
-    links = createLink(link_dirpath, topic_num, fun)
+    links = createLink(distance_dirpath, topic_num, fun)
     
     graph_data = {"nodes": nodes, "links": links} 
     

@@ -93,8 +93,9 @@ def topicOfClassificationForAllYear(probDir, topicDir, classDir, clf_dict, fun):
         
         year = probFiles[i][-8:-4]
         topic_index = np.squeeze(np.array(prob.argmax(1)))
-        doc_topic = []
-        [doc_topic.append(' '.join(topics[index])) for index in topic_index]
+        doc_topic = topic_index
+        #doc_topic = []
+        #[doc_topic.append(' '.join(topics[index])) for index in topic_index]
  
         all_clf, unique_clf = classificationOfDocument(inFile, clf_dict, fun)
         clf_topic = topicOfClassification(unique_clf, all_clf, clf_dict, doc_topic, fun)
@@ -190,13 +191,13 @@ if __name__ == "__main__":
             topicDir = options.topic
             
     if options.clf is None:
-            print 'No category filename specified, system with exit\n'
+            print 'No class filename specified, system with exit\n'
             sys.exit('System will exit')
     elif options.clf is not None:
             classDir = options.clf
 
     if options.clf_dict is None:
-            print 'No category filename specified, system with exit\n'
+            print 'No class-dict filename specified, system with exit\n'
             sys.exit('System will exit') 
     elif options.clf_dict is not None:
             clf_dict = ioFile.load_object(options.clf_dict)              
@@ -206,13 +207,15 @@ if __name__ == "__main__":
     elif options.output is not None:
             outFile = options.output
     
-    fun = 0
+    fun = 1
     
     all_clf_topic = topicOfClassificationForAllYear(probDir, topicDir, classDir, clf_dict, fun)
     
-    clf_topic_stat = convertDataToJson(all_clf_topic, clf_dict, fun)
+    ioFile.save_object(all_clf_topic, "class_topic_acm-class.pkl")
     
-    ioFile.save_json({"category": clf_topic_stat}, outFile)
+    #clf_topic_stat = convertDataToJson(all_clf_topic, clf_dict, fun)
+    
+    #ioFile.save_json({"category": clf_topic_stat}, outFile)
     
     
     
