@@ -1,0 +1,5 @@
+.DS_Store
+node_modules
+static/bower_components
+data
+env

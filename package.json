@@ -1,0 +1,31 @@
+{
+  "name": "topics",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "d3": "^3.5.5",
+    "fs": "0.0.2",
+    "handlebars": "^3.0.3",
+    "http": "0.0.0",
+    "jquery": "^2.1.4",
+    "jquery-ui": "^1.10.5",
+    "lodash": "^3.10.0",
+    "prouter": "^2.1.6",
+    "router": "^1.1.2"
+  },
+  "devDependencies": {
+    "babelify": "^6.1.2",
+    "gulp": "^3.9.0",
+    "gulp-browserify": "^0.5.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-less": "^3.0.3",
+    "gulp-rename": "^1.2.2",
+    "gulp-watch": "^4.2.4"
+  }
+}
