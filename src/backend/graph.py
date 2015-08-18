@@ -5,15 +5,17 @@ from src import ioFile
 
 def createNode(filenames, clf_topic_stat=None):
     nodes = []
+    i = 0
     for fname in filenames:
         topics = ioFile.load_object(fname)
         if clf_topic_stat == None:
             for topic in topics:
                 nodes.append({"name": ' '.join(topic)})
         else:
-            for clf_topic in clf_topic_stat:
-                for index in clf_topic.keys():
-                    nodes.append({"name": ' '.join(topics[index])})
+            clf_topic = clf_topic_stat[i]
+            for index in clf_topic.keys():
+                nodes.append({"name": ' '.join(topics[index])})
+            i += 1
 
     print "finish creating nodes"
     return nodes

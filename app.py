@@ -1,12 +1,12 @@
 from flask import Flask, request, send_from_directory, render_template, jsonify
 import json
+from os import path
 from src.backend import topic
 
 app = Flask(__name__)
 app.debug = True
 
-acm_class_path = 'doc/acm_class.pkl'
-arxiv_catgeory_path = 'doc/arxiv_category.pkl'
+root_path = 'pzwang/data/lda_new'
 
 @app.route('/static/<path:path>')
 def send_static_file(path):
@@ -43,9 +43,9 @@ def classes_for_year():
 @app.route('/class/<class_mode>')
 def classes(class_mode='acm-class'):
     if class_mode == 'acm-class':
-        fname = acm_class_path
+        fname = path.join(root_path, 'class_topic', 'acm_class.pkl')
     elif class_mode == 'arxiv-category':
-        fname = arxiv_catgeory_path
+        fname = path.join(root_path, 'class_topic', 'arxiv_category.pkl')
     
     class_list = topic.get_classes(fname)
     

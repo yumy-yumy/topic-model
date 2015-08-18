@@ -10,7 +10,11 @@
 	  		{% if class_mode == 'acm-class' and not first_class and name|length == 2 %}
 	  			<hr>
 	  		{% endif %}
-			<li><a href=#> {{ name }} </a> {{ content }} </li>
+	  		{% if class_mode == 'acm-class' %}
+				<li><a href=#> {{ name }} </a> {{ content }} </li>
+			{% elif class_mode == 'arxiv-category' %}
+				<li> {{ name }} <a href=#> {{ content }} </a></li>
+			{% endif %}
 			{% set first_class = False %}
 		{% endfor %}
   </body>

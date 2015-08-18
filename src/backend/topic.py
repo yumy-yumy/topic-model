@@ -52,11 +52,14 @@ def topics_for_year(year):
     return graph_data
 
 '''
-example input data:
-acm-class: A.1, arxiv-category:
+example:
+class_mode=acm-class, class_name=A.1;  class_mode=arxiv-category, class_name=Artificial Intelligence
 '''
-def topics_for_class(class_name, start, end):
-    clf_topic = ioFile.load_object(path.join(root_path, 'class_topic/class_topic_acm-class.pkl'))
+def topics_for_class(class_mode, class_name, start, end):
+    if class_mode == 'acm-class':
+        clf_topic = ioFile.load_object(path.join(root_path, 'class_topic/class_topic_acm-class.pkl'))
+    elif class_mode == 'arxiv-category':
+        clf_topic = ioFile.load_object(path.join(root_path, 'class_topic/class_topic_arxiv-category.pkl'))
 
     clf_topic_stat = []
     topic_num = []
