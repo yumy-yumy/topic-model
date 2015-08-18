@@ -5,6 +5,9 @@ from src.backend import topic
 app = Flask(__name__)
 app.debug = True
 
+acm_class_path = 'doc/acm_class.pkl'
+arxiv_catgeory_path = 'doc/acm_class.pkl'
+
 @app.route('/static/<path:path>')
 def send_static_file(path):
     return send_from_directory('static', path)
@@ -36,6 +39,16 @@ def classes_for_year():
     year = request.args.get('year')
 
     return 'hello world!'
+
+@app.route('/class/<class_mode>')
+def classes(class_mode='acm-class'):
+    if class_mode == 'acm-class':
+        fname = acm_class_path
+    elif class_mode == 'arxiv-category':
+        fname = arxiv_catgeory_path
+    class_list = topic.get_classes(fname)
+    
+    return render_template('class_display.html', class_list=class_list)
 
 if __name__ == '__main__':
     app.run()

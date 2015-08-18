@@ -74,3 +74,8 @@ def topics_for_class(class_name, start, end):
     graph_data = {"nodes": nodes, "links": links}
 
     return graph_data
+
+def get_classes(fname):
+    class_list = ioFile.load_object(fname)
+    
+    return class_list
