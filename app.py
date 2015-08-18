@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.debug = True
 
 acm_class_path = 'doc/acm_class.pkl'
-arxiv_catgeory_path = 'doc/acm_class.pkl'
+arxiv_catgeory_path = 'doc/arxiv_category.pkl'
 
 @app.route('/static/<path:path>')
 def send_static_file(path):
@@ -46,9 +46,10 @@ def classes(class_mode='acm-class'):
         fname = acm_class_path
     elif class_mode == 'arxiv-category':
         fname = arxiv_catgeory_path
+    
     class_list = topic.get_classes(fname)
     
-    return render_template('class_display.html', class_list=class_list)
+    return render_template('class_display.html', class_list=class_list, class_mode=class_mode)
 
 if __name__ == '__main__':
     app.run()

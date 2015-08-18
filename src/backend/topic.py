@@ -51,6 +51,10 @@ def topics_for_year(year):
 
     return graph_data
 
+'''
+example input data:
+acm-class: A.1, arxiv-category:
+'''
 def topics_for_class(class_name, start, end):
     clf_topic = ioFile.load_object(path.join(root_path, 'class_topic/class_topic_acm-class.pkl'))
 
