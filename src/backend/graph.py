@@ -75,3 +75,28 @@ def topicNum(inFile, fun):
             num.append(int(line[0]))
 
     return np.array(num)
+
+def createTree(topicFiles, distanceFiles):
+    level = len(topicFiles)
+    nodes = []
+    parent = []
+    for i in range(0, level):
+        topics = ioFile.load_object(topicFiles[i])
+        # nodes at the bottom level of the tree
+        if i == 0:    
+            [nodes.append({"name": ' '.join(topic), "size": 1}) for topic in topics]
+        else:
+            pre_nodes = nodes
+            nodes = []
+            for j in range(0, len(topics)):
+                indexes = np.where(parent==j)[0]
+                children = []
+                [children.append(pre_nodes[index]) for index in indexes]
+                nodes.append({"name": ' '.join(topics[j]), "children": children})
+        if i < level-1:
+            distances = np.matrix(ioFile.load_object(distanceFiles[i]))
+            parent = np.squeeze(np.array(distances.argmin(1)))
+        
+    root = {"name": '...', "children": nodes}
+    
+    return root
