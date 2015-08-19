@@ -5,7 +5,7 @@ from src.backend import graph
 from src.backend import fileSys
 from src import ioFile
 
-root_path = '/home/pzwang/data/lda_new'
+root_path = '/Users/kalleilv/desktop/topic-model/topic_data'
 
 def topics_from_to(start, end):
     # fill the path where models are stored

@@ -1,5 +1,6 @@
 from flask import Flask, request, send_from_directory, render_template, jsonify
 import json
+import os
 from src.backend import topic
 
 app = Flask(__name__)
@@ -18,24 +19,36 @@ def topics_for_years():
     year_from = request.args.get('from')
     year_to = request.args.get('to')
 
-    return jsonify({ 'from': year_from, 'to': year_to })
+    filename = os.path.join(os.path.dirname(__file__), 'static/data/graph_1993_2002.json')
+
+    data_file = open(filename, 'r')
+    data_json = data_file.read()
+    data_file.close()
+
+    return data_json
 
 @app.route('/topics_for_year')
 def topics_for_year():
     year = request.args.get('year')
 
-    return 'hello world!'
+    filename = os.path.join(os.path.dirname(__file__), 'static/data/flare.json')
+
+    data_file = open(filename, 'r')
+    data_json = data_file.read()
+    data_file.close()
+
+    return data_json
 
 @app.route('/topics_for_class')
 def topics_for_class():
     class_name = request.args.get('class')
 
-    return 'hello world!'
+    return jsonify({ 'message': 'Hello World!' })
 
 def classes_for_year():
     year = request.args.get('year')
 
-    return 'hello world!'
+    return jsonify({ 'message': 'Hello World!' })
 
 if __name__ == '__main__':
     app.run()
