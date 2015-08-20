@@ -17,42 +17,23 @@ def send_static_file(path):
 def index():
     return render_template('index.html')
 
-@app.route('/topics_for_years')
-def topics_for_years():
-    year_from = request.args.get('from')
-    year_to = request.args.get('to')
+@app.route('/topics_for_years/<year_from>/<year_to>')
+def topics_for_years(year_from, year_to):
+    json_data = topic.topics_from_to(int(year_from), int(year_to))
 
-    filename = os.path.join(os.path.dirname(__file__), 'static/data/graph_1993_2002.json')
+    return json.dumps(json_data)
 
-    data_file = open(filename, 'r')
-    data_json = data_file.read()
-    data_file.close()
+@app.route('/topics_for_year/<year>')
+def topics_for_year(year):
+    json_data = topic.topics_for_year(int(year))
 
-    return data_json
+    return json.dumps(json_data)
 
-@app.route('/topics_for_year')
-def topics_for_year():
-    year = request.args.get('year')
+@app.route('/topics_for_class/<class_name>/<year_from>/<year_to>/<class_mode>')
+def topics_for_class(class_name, year_from=1993, year_to=2015, class_mode='arxiv-category'):
+    json_data = topic.topics_for_year(class_mode, class_name, int(year_from), int(year_to))
 
-    filename = os.path.join(os.path.dirname(__file__), 'static/data/flare.json')
-
-    data_file = open(filename, 'r')
-    data_json = data_file.read()
-    data_file.close()
-
-    return data_json
-
-@app.route('/topics_for_class')
-def topics_for_class():
-    class_name = request.args.get('class')
-
-    filename = os.path.join(os.path.dirname(__file__), 'static/data/graph_1993_2002.json')
-
-    data_file = open(filename, 'r')
-    data_json = data_file.read()
-    data_file.close()
-
-    return data_json
+    return json.dumps(json_data)
 
 @app.route('/class/<class_mode>')
 def classes(class_mode='acm-class'):

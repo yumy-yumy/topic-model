@@ -3,15 +3,17 @@ var $ = require('jquery');
 var _ = require('lodash');
 
 var templateHTML = `
-  <ul class="list-unstyled">
-    <% classes.forEach(function(className){ %>
-      <li>
-        <a href="#/topics/<%= year %>/classes/<%= className %>" class="<% if(selectedClass == className){ %>selected<% } %>">
-          <%= className %>
-        </a>
-      </li>
-    <% }) %>
-  </ul>
+  <div id="class-list-wrapper">
+    <ul class="list-unstyled">
+      <% classes.forEach(function(className){ %>
+        <li>
+          <a href="#/topics/<%= year %>/classes/<%= className %>" class="<% if(selectedClass == className){ %>selected<% } %>">
+            <%= className %>
+          </a>
+        </li>
+      <% }) %>
+    </ul>
+  </div>
 `;
 
 var template = _.template(templateHTML);

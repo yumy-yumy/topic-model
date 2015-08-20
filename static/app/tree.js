@@ -21,27 +21,23 @@ module.exports = (options) => {
     .append("svg:g")
       .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
 
-  d3.json("data/flare.json", function(json) {
-    root = json;
-    root.x0 = h / 2;
-    root.y0 = 0;
+  root = options.data;
+  root.x0 = h / 2;
+  root.y0 = 0;
 
-    function toggleAll(d) {
-      if (d.children) {
-        d.children.forEach(toggleAll);
-        toggle(d);
-      }
+  function toggleAll(d) {
+    console.log(d)
+    if (d.children) {
+      d.children.forEach(toggleAll);
+      toggle(d);
     }
+  }
 
-    // Initialize the display to show a few nodes.
-    root.children.forEach(toggleAll);
-    toggle(root.children[1]);
-    toggle(root.children[1].children[2]);
-    toggle(root.children[9]);
-    toggle(root.children[9].children[0]);
+  // Initialize the display to show a few nodes.
+  root.children.forEach(toggleAll);
 
-    update(root);
-  });
+
+  update(root);
 
   function update(source) {
     var duration = d3.event && d3.event.altKey ? 5000 : 500;

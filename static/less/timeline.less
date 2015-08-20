@@ -36,6 +36,11 @@ body{
 }
 
 #class-list{
+  #class-list-wrapper{
+    max-height: 500px;
+    overflow-x: scroll;
+  }
+
   li{
     line-height: 1.5em;
 
@@ -138,6 +143,10 @@ body{
     stroke-width: 1.5px;
   }
 
+  #tree-canvas{
+    position:absolute;
+    top: 50px;
+  }
 
   #class-container{
     width: 300px;
@@ -280,16 +289,17 @@ body{
     font-family: @font-family;
     font-size: 0.75em;
     fill: @font-color;
+    text-shadow: 0px 0px 1px rgba(0,0,0,.9)
   }
 }
 
 .link {
   fill: none;
-  stroke: #000;
+  stroke: white;
   stroke-opacity: .2;
 
   &:hover{
-    stroke-opacity: .5;
+    stroke-opacity: 1;
   }
 }
 
