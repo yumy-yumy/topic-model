@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="static/bower_components/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="static/bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="static/css/visualization.css"/>
+  </head>
+  <body>
+	  	{% set first_class = True %}
+	  	{% for name, content in class_list|dictsort %}
+	  		{% if class_mode == 'acm-class' and not first_class and name|length == 2 %}
+	  			<hr>
+	  		{% endif %}
+	  		{% if class_mode == 'acm-class' %}
+				<li><a href=#> {{ name }} </a> {{ content }} </li>
+			{% elif class_mode == 'arxiv-category' %}
+				<li> {{ name }} <a href=#> {{ content }} </a></li>
+			{% endif %}
+			{% set first_class = False %}
+		{% endfor %}
+  </body>
+</html>
