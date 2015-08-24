@@ -1,4 +1,5 @@
 var $ = require('jquery');
+var _ = require('lodash');
 
 require('jquery-ui/slider');
 
@@ -9,41 +10,66 @@ var renderTree = require('./tree');
 var Router = require('prouter').Router;
 var Api = require('./api');
 
-function initTopicDiagram(){
-  Api.getTopicsForYears({ from: 1990, to: 2000 })
-    .done(function(data){
-      console.log(data);
-    });
+const DEFAULT_YEAR_RANGE = { from: 1993, to: 2002 };
 
+function generateLabels(range){
+  return _.range(range.from, range.to + 1);
+}
+
+function initTopicDiagram(){
   if($('#chart').find('svg').length == 0){
-    renderDiagram({
-      data: 'static/data/1993_2002.json',
-      target: document.getElementById('chart'),
-      timelineTarget: document.getElementById('chart-timeline'),
-      labels: ['1993', '1994', '1995', '1996', '1997', '1998', '1999', '2000', '2001', '2002']
-    });
+    Api.getTopicsForYears(DEFAULT_YEAR_RANGE)
+      .done(function(data){
+        renderDiagram({
+          data: JSON.parse(data),
+          target: document.getElementById('chart'),
+          timelineTarget: document.getElementById('chart-timeline'),
+          labels: generateLabels(DEFAULT_YEAR_RANGE)
+        });
+      });
   }
 }
 
+function updateTopicDiagram(range){
+  Api.getTopicsForYears(range)
+    .done(function(data){
+      renderDiagram({
+        data: JSON.parse(data),
+        target: document.getElementById('chart'),
+        timelineTarget: document.getElementById('chart-timeline'),
+        labels: generateLabels(range)
+      });
+    });
+}
+
 function initClasses(year, selectedClass){
-  renderClasses({
-    target: document.getElementById('class-list'),
-    classes: ['Class A', 'Class B', 'Class C', 'Class D', 'Class E'],
-    year: year,
-    selectedClass: selectedClass
-  });
+  Api.getClasses()
+    .done(function(data){
+      renderClasses({
+        target: document.getElementById('class-list'),
+        classes: JSON.parse(data).classes,
+        year,
+        selectedClass
+      });
+    });
 }
 
 function initTopicTree(year){
   var $container = $('#topic-tree-container');
   $container.addClass('show');
   $container.find('h1').html(`Topics in year ${year}`);
+  $container.find('#class-chart-timeline').hide();
 
-  renderTree({
-    target: document.getElementById('tree-canvas')
-  });
+  Api.getTopicsForYear({ year })
+    .done(function(data){
+      console.log(JSON.parse(data));
+      renderTree({
+        target: document.getElementById('tree-canvas'),
+        data: JSON.parse(data)
+      });
 
-  initClasses(year, null);
+      initClasses(year, null);
+    });
 }
 
 function initClassDiagram(year, className){
@@ -51,13 +77,17 @@ function initClassDiagram(year, className){
   $container.addClass('show');
   $container.find('#class-container-toggle i').removeClass('fa-chevron-left').addClass('fa-chevron-right');
   $container.find('h1').html(`Topics of class "${className}"`);
+  $container.find('#class-chart-timeline').show();
 
-  renderDiagram({
-    data: 'data/1993_2002.json',
-    target: document.getElementById('tree-canvas'),
-    timelineTarget: document.getElementById('chart-timeline'),
-    labels: ['1993', '1994', '1995', '1996', '1997', '1998', '1999', '2000', '2001', '2002']
-  });
+  Api.getTopicsForClass({ className })
+    .done(function(data){
+      renderDiagram({
+        data: JSON.parse(data),
+        target: document.getElementById('tree-canvas'),
+        timelineTarget: document.getElementById('class-chart-timeline'),
+        labels: generateLabels(DEFAULT_YEAR_RANGE)
+      });
+    });
 
   initClasses(year, className);
 }
@@ -92,6 +122,8 @@ Router.listen({
 });
 
 $(function(){
+  $('#settings-years-title').html(`Show me topics between ${DEFAULT_YEAR_RANGE.from} and ${DEFAULT_YEAR_RANGE.to}.`);
+
   $('#visualization-settings-toggle').on('click', function(){
     $(this).toggleClass('active');
     $('#visualization-settings-container').toggleClass('show');
@@ -110,7 +142,7 @@ $(function(){
     min: 1993,
     max: 2002,
     step: 1,
-    values: [1993, 2002],
+    values: [DEFAULT_YEAR_RANGE.from, DEFAULT_YEAR_RANGE.to],
     slide: function(event, ui){
       var start = ui.values[0];
       var end = ui.values[1];
@@ -120,6 +152,9 @@ $(function(){
       }
 
       $('#settings-years-title').html(`Show me topics between ${start} and ${end}.`);
+    },
+    stop: function(event, ui){
+      updateTopicDiagram({ from: ui.values[0], to: ui.values[1] });
     }
   });
 });
