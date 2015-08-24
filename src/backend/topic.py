@@ -43,12 +43,12 @@ def topics_for_year(year):
 
     distance_dirpath = path.join(model_path, 'distance')
     distance_files = fileSys.traverseDirectory(distance_dirpath)
-    
+
     topic_tree = graph.createTree(topic_files, distance_files)
-    
-    
+
+
     return topic_tree
-    
+
     '''
     fun = 1
     nodes = graph.createNode(topic_files)
@@ -93,5 +93,5 @@ def topics_for_class(class_mode, class_name, start, end):
 
 def get_classes(fname):
     class_list = ioFile.load_object(fname)
-    
+
     return class_list
