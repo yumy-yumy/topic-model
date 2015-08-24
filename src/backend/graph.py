@@ -1,6 +1,5 @@
 import numpy as np
 from numpy import cumsum
-from src.backend import fileSys
 from src import ioFile
 
 def createNode(filenames, clf_topic_stat=None):
@@ -44,18 +43,18 @@ def createLink(filenames, topic_num, fun, clf_topic_stat=None):
                     index = np.where(distance<0.5)[0]
                     for index_j in index:
                         links.append({"source": node_index_i+index_i, "target": node_index_j+index_j, "value": 1})
-                        if node_index_i+index_i == node_index_j+index_j:
-                            print i, node_index_i, index_i, node_index_j, index_j
                 elif fun == 1:
                     index = np.where(distance==distance.min())[0][0]
                     links.append({"source": node_index_i+index_i, "target": node_index_j+index, "value": 1})
         elif fun == 2:
             for index_i, count in clf_topic_stat[i].iteritems():
-                distance = distances[index_i]
+                distance = np.array(distances[index_i])
                 index = set(np.where(distance<0.5)[0])
                 index = index.intersection(set(clf_topic_stat[i+1].keys()))
                 for index_j in index:
-                    links.append({"source": node_index_i+index_i, "target": node_index_j+index_j, "value": count})
+                    links.append({"source": node_index_i+clf_topic_stat[i].keys().index(index_i), 
+                                  "target": node_index_j+clf_topic_stat[i+1].keys().index(index_j), 
+                                  "value": count})
         i += 1
     
     #print "finish creating links"
@@ -113,3 +112,11 @@ def createTree(topicFiles, distanceFiles):
     root = {"name": '...', "children": nodes}
     
     return root
+
+def filterIndependentNode(nodes, links):
+    unique_nodes = set()
+    for link in links:
+        unique_nodes.add(link['source'])
+        unique_nodes.add(link['target'])
+        
+    return nodes
