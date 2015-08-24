@@ -17,11 +17,11 @@ def createNode(filenames, clf_topic_stat=None):
                 nodes.append({"name": ' '.join(topics[index])})
             i += 1
 
-    print "finish creating nodes"
+    #print "finish creating nodes"
     return nodes
 
 '''
-fun=0, horizontal graph; fun=1, vertical graph; fun=2, class
+fun=0, horizontal graph; fun=1, vertical graph; fun=2, graph for class
 '''
 def createLink(filenames, topic_num, fun, clf_topic_stat=None):
     # start index of each year
@@ -44,6 +44,8 @@ def createLink(filenames, topic_num, fun, clf_topic_stat=None):
                     index = np.where(distance<0.5)[0]
                     for index_j in index:
                         links.append({"source": node_index_i+index_i, "target": node_index_j+index_j, "value": 1})
+                        if node_index_i+index_i == node_index_j+index_j:
+                            print i, node_index_i, index_i, node_index_j, index_j
                 elif fun == 1:
                     index = np.where(distance==distance.min())[0][0]
                     links.append({"source": node_index_i+index_i, "target": node_index_j+index, "value": 1})
@@ -54,16 +56,15 @@ def createLink(filenames, topic_num, fun, clf_topic_stat=None):
                 index = index.intersection(set(clf_topic_stat[i+1].keys()))
                 for index_j in index:
                     links.append({"source": node_index_i+index_i, "target": node_index_j+index_j, "value": count})
-
         i += 1
-
-    print "finish creating links"
+    
+    #print "finish creating links"
     return links
 
 def topicNum(inFile, fun):
     num = []
     if fun == 0:
-        filenames = fileSys.traverseDirectory(inFile)
+        filenames = inFile
         for fname in filenames:
             data_iterator = ioFile.statFromFile(fname)
             for line in data_iterator:
@@ -75,6 +76,18 @@ def topicNum(inFile, fun):
             num.append(int(line[0]))
 
     return np.array(num)
+
+def createGraph(topicFiles, distanceFiles, topic_num, fun, clf_topic_stat=None):
+    nodes = createNode(topicFiles, clf_topic_stat)
+    if fun < 2:
+        topic_num = topicNum(topic_num, fun)
+    elif fun == 2:
+        topic_num = np.array(topic_num)
+    links = createLink(distanceFiles, topic_num, fun, clf_topic_stat)
+
+    graph_data = {"nodes": nodes, "links": links}
+    
+    return graph_data
 
 def createTree(topicFiles, distanceFiles):
     level = len(topicFiles)

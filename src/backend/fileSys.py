@@ -11,7 +11,7 @@ def traverseDirectory(dirpath, arg=None):
             year = int(fname[-8:-4])
         if path.isfile(fname):
             if arg == None or year >= arg[0] and year <= arg[1]:
-                full_fnames.append(fname)            
+                full_fnames.append(fname)          
             
     return full_fnames
 
