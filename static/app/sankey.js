@@ -1,3 +1,5 @@
+var _ = require('lodash');
+
 module.exports = function(d3){
   d3.sankey = function() {
     var sankey = {},
@@ -113,6 +115,8 @@ module.exports = function(d3){
           nextNodes,
           x = 0;
 
+      var visited = {}
+
       while (remainingNodes.length) {
         nextNodes = [];
         remainingNodes.forEach(function(node) {
@@ -120,13 +124,21 @@ module.exports = function(d3){
           node.dx = nodeWidth;
           node.sourceLinks.forEach(function(link) {
             if (nextNodes.indexOf(link.target) < 0) {
+              visited[`${node.name}#${link.target.name}`] ? visited[`${node.name}#${link.target.name}`]++ : visited[`${node.name}#${link.target.name}`] = 1
               nextNodes.push(link.target);
             }
+
+            if(visited[`${node.name}#${link.target.name}`] > 1000){
+              alert(`Cycle in ${node.name} - ${link.target.name}`)
+            }
           });
+
         });
         remainingNodes = nextNodes;
         ++x;
       }
+
+
 
       //
       moveSinksRight(x);
@@ -149,8 +161,23 @@ module.exports = function(d3){
       });
     }
 
+    function pathLength(node){
+      if(node.targetLinks.length == 0){
+        return 0;
+      }else{
+        var targets = [];
+
+        node.targetLinks.forEach(function(link){
+          targets.push(pathLength(link.source))
+        });
+
+        return _.max(targets) + 1;
+      }
+    }
+
     function scaleNodeBreadths(kx) {
       nodes.forEach(function(node) {
+        node.x = pathLength(node);
         node.x *= kx;
       });
     }
@@ -162,7 +189,6 @@ module.exports = function(d3){
           .entries(nodes)
           .map(function(d) { return d.values; });
 
-      //
       initializeNodeDepth();
       resolveCollisions();
       for (var alpha = 1; iterations > 0; --iterations) {

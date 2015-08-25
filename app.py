@@ -81,19 +81,21 @@ def topics_for_year(year):
 
 @app.route('/topics_for_class/<class_name>')
 def topics_for_class(class_name):
-    year_from=1993
-    year_to=1996
+    year_from=1998
+    year_to=2015
     class_mode='arxiv-category'
 
-    data = topic.topics_for_class('arxiv-category', 'Materials Science', year_from, year_to)
+    data = topic.topics_for_class('acm-class', 'A.1', year_from, year_to)
 
-    print data
+    print data[1]
 
-    #independent_filtered = filter_independent_nodes(data)
+    #independent_filtered = filter_independent_nodes(data[0])
     #no_cycles = filter(lambda node: node['source'] != node['target'], independent_filtered['links'])
     #independent_filtered['links'] = no_cycles
 
-    return json.dumps(data)
+    #independent_filtered
+
+    return json.dumps({ 'topics': data[0], 'years': list(data[1]) })
 
 @app.route('/class/<class_mode>')
 def classes(class_mode='acm-class'):

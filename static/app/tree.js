@@ -3,9 +3,9 @@ var d3 = require('../../node_modules/d3/d3.min');
 module.exports = (options) => {
   options.target.innerHTML = '';
 
-  var m = [20, 120, 20, 120],
+  var m = [0, 120, 20, 120],
       w = 1280 - m[1] - m[3],
-      h = 650 - m[0] - m[2],
+      h = options.height - m[0] - m[2],
       i = 0,
       root;
 
@@ -26,7 +26,6 @@ module.exports = (options) => {
   root.y0 = 0;
 
   function toggleAll(d) {
-    console.log(d)
     if (d.children) {
       d.children.forEach(toggleAll);
       toggle(d);
@@ -46,7 +45,7 @@ module.exports = (options) => {
     var nodes = tree.nodes(root).reverse();
 
     // Normalize for fixed-depth.
-    nodes.forEach(function(d) { d.y = d.depth * 180; });
+    nodes.forEach(function(d) { d.y = d.depth * 320; });
 
     // Update the nodes…
     var node = vis.selectAll("g.node")

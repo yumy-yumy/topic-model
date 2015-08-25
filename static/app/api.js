@@ -10,7 +10,8 @@ function getTopicsForYear(options){
 }
 
 function getTopicsForClass(options){
-  return $.get(`/topics_for_class/${options.className}`);
+  var className = options.className.toLowerCase().replace(/ /g, '+');
+  return $.get(`/topics_for_class/${className}`);
 }
 
 function getClasses(options){

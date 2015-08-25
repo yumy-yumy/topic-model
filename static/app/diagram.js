@@ -12,7 +12,9 @@ module.exports = (options) => {
 
   var margin = {top: 1, right: 1, bottom: 6, left: 1},
       width = (widthForItem * (options.labels.length - 1)) - margin.left - margin.right,
-      height = 660 - margin.top - margin.bottom;
+      height = options.height - margin.top - margin.bottom;
+
+  $(options.target).css('height', options.height);
 
   renderTimeline({
     target: options.timelineTarget,
@@ -67,7 +69,9 @@ module.exports = (options) => {
       .data(options.data.nodes)
     .enter().append("g")
       .attr("class", "node")
-      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+      .attr("transform", function(d) {
+        return "translate(" + d.x + "," + d.y + ")";
+      })
     .call(d3.behavior.drag()
       .origin(function(d) { return d; })
       .on("dragstart", function() { this.parentNode.appendChild(this); })

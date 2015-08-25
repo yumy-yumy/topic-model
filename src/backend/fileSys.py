@@ -1,16 +1,16 @@
 from os import walk, path
 
-def traverseDirectory(dirpath, arg=None):
+def traverseDirectory(dirpath, years=None):
     for (dirpath, dirnames, filenames) in walk(dirpath):
         filenames = sorted(filenames)
         break
     full_fnames = []
     for fname in filenames:
         fname = path.join(dirpath, fname)
-        if arg is not None:
+        if years is not None:
             year = int(fname[-8:-4])
         if path.isfile(fname):
-            if arg == None or year >= arg[0] and year <= arg[1]:
+            if years is None or year in years:
                 full_fnames.append(fname)          
             
     return full_fnames
@@ -18,13 +18,14 @@ def traverseDirectory(dirpath, arg=None):
 '''
 fun=0, bottom level topics; fun=1, top level topics 
 '''
-def traverseTopicDirecotry(dirpath, fun, arg=None):
+def traverseTopicDirecotry(dirpath, fun, years=None):
     for (dirpath, dirnames, filenames) in walk(dirpath):
         dirnames = sorted(dirnames)
         break
     full_fnames = []
     for dirname in dirnames:
-        if arg == None or int(dirname) >= arg[0] and int(dirname) <= arg[1]:
+        year = int(dirname)
+        if years is None or year in years:
             filenames = traverseDirectory(path.join(dirpath, dirname, 'topic'))
             if fun == 0:
                 full_fnames.append(filenames[0])
