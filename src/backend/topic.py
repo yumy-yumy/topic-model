@@ -1,39 +1,38 @@
 from os import path
 from collections import Counter
-import numpy as np
 from src.backend import graph
 from src.backend import fileSys
 from src import ioFile
 
 root_path = '/Users/kalleilv/desktop/topic-model/topic_data'
+first_year = 1993
 
 def topics_from_to(start, end):
     # fill the path where models are stored
-    topic_files = fileSys.traverseTopicDirecotry(path.join(root_path, 'lda_model'), 1, [start, end])
+    topicFiles = fileSys.traverseTopicDirecotry(path.join(root_path, 'lda_model'), 1, [start, end])
 
     # fill the path where topic_num.csv is stored
-    topic_num_file = path.join(root_path, 'topic_num')
-    inFile = topic_num_file
+    topic_num_dirpath = path.join(root_path, 'topic_num')
+    topic_num_file = fileSys.traverseDirectory(topic_num_dirpath, [start, end])
 
     # fill the path where distances are stored
     distance_dirpath = path.join(root_path, 'graph_horizontal/distance')
-    distance_files = fileSys.traverseDirectory(distance_dirpath, [start, end])[1:]
 
-    fun = 0
-    nodes = graph.createNode(topic_files)
-    topic_num = graph.topicNum(inFile, fun)
-    links = graph.createLink(distance_files, topic_num, fun)
+    if start == first_year:
+        distanceFiles = fileSys.traverseDirectory(distance_dirpath, [start, end])
+    else:
+        distanceFiles = fileSys.traverseDirectory(distance_dirpath, [start, end])[1:]
 
-    graph_data = {"nodes": nodes, "links": links}
+    topic_graph = graph.createGraph(topicFiles, distanceFiles, topic_num_file, 0)
 
-    return graph_data
+    return topic_graph
 
 def topics_for_year(year):
     # fill the path where models are stored
     model_path = path.join(root_path, 'lda_model', str(year))
 
     topic_dirpath = path.join(model_path, 'topic')
-    topic_files = fileSys.traverseDirectory(topic_dirpath)
+    topicFiles = fileSys.traverseDirectory(topic_dirpath)
 
     '''
     # fill the path where topic_num.csv files are stored
@@ -42,18 +41,18 @@ def topics_for_year(year):
     '''
 
     distance_dirpath = path.join(model_path, 'distance')
-    distance_files = fileSys.traverseDirectory(distance_dirpath)
 
-    topic_tree = graph.createTree(topic_files, distance_files)
+    distanceFiles = fileSys.traverseDirectory(distance_dirpath)
 
+    topic_tree = graph.createTree(topicFiles, distanceFiles)
 
     return topic_tree
 
     '''
     fun = 1
-    nodes = graph.createNode(topic_files)
+    nodes = graph.createNode(topicFiles)
     topic_num = graph.topicNum(inFile, fun)
-    links = graph.createLink(distance_files, topic_num, fun)
+    links = graph.createLink(distanceFiles, topic_num, fun)
 
     graph_data = {"nodes": nodes, "links": links}
 
@@ -77,19 +76,17 @@ def topics_for_class(class_mode, class_name, start, end):
         topic_num.append(len(set(clf_topic[str(year)][class_name])))
 
     # fill the path where models are stored
-    topic_files = fileSys.traverseTopicDirecotry(path.join(root_path, 'lda_model'), 0, [start, end])
+    topicFiles = fileSys.traverseTopicDirecotry(path.join(root_path, 'lda_model'), 0, [start, end])
 
     distance_dirpath = path.join(root_path, 'class_topic', 'distance')
-    distance_files = fileSys.traverseDirectory(distance_dirpath, [start, end])[1:]
+    if start == first_year:
+        distanceFiles = fileSys.traverseDirectory(distance_dirpath, [start, end])
+    else:
+        distanceFiles = fileSys.traverseDirectory(distance_dirpath, [start, end])[1:]
 
-    fun = 2
-    nodes = graph.createNode(topic_files, clf_topic_stat)
-    topic_num = np.array(topic_num)
-    links = graph.createLink(distance_files, topic_num, fun, clf_topic_stat)
+    topic_graph = graph.createGraph(topicFiles, distanceFiles, topic_num, 2, clf_topic_stat)
 
-    graph_data = {"nodes": nodes, "links": links}
-
-    return graph_data
+    return topic_graph
 
 def get_classes(fname):
     class_list = ioFile.load_object(fname)
