@@ -7,6 +7,7 @@ def createNode(filenames, clf_topic_stat=None):
     i = 0
     for fname in filenames:
         topics = ioFile.load_object(fname)
+        nodes.append({"name":''})
         if clf_topic_stat == None:
             for topic in topics:
                 nodes.append({"name": ' '.join(topic)})
@@ -24,6 +25,7 @@ fun=0, horizontal graph; fun=1, vertical graph; fun=2, graph for class
 '''
 def createLink(filenames, topic_num, fun, clf_topic_stat=None):
     # start index of each year
+    topic_num += 1
     node_index = cumsum(topic_num).tolist()[:-1]
     node_index.insert(0, 0)
 
@@ -31,8 +33,8 @@ def createLink(filenames, topic_num, fun, clf_topic_stat=None):
     i = 0
     for fname in filenames:
         # indexes of first nodes in the graph for year i and i+1
-        node_index_i = node_index[i]
-        node_index_j = node_index[i+1]
+        node_index_i = node_index[i]+1
+        node_index_j = node_index[i+1]+1
         # distances between year i and i+1
         distances = ioFile.load_object(fname)
         if fun < 2:
@@ -42,10 +44,10 @@ def createLink(filenames, topic_num, fun, clf_topic_stat=None):
                 if fun == 0:
                     index = np.where(distance<0.5)[0]
                     for index_j in index:
-                        links.append({"source": node_index_i+index_i, "target": node_index_j+index_j, "value": 1})
+                        links.append({"source": node_index_i+index_i, "target": node_index_j+index_j, "value": 5})
                 elif fun == 1:
                     index = np.where(distance==distance.min())[0][0]
-                    links.append({"source": node_index_i+index_i, "target": node_index_j+index, "value": 1})
+                    links.append({"source": node_index_i+index_i, "target": node_index_j+index, "value": 5})
         elif fun == 2:
             for index_i, count in clf_topic_stat[i].iteritems():
                 distance = np.array(distances[index_i])
@@ -60,6 +62,31 @@ def createLink(filenames, topic_num, fun, clf_topic_stat=None):
     
     #print "finish creating links"
     return links
+
+def addVirtualLink(links, topic_num):
+    source_nodes = set()
+    target_nodes = set()
+    for link in links:
+        source_nodes.add(link['source'])
+        target_nodes.add(link['target'])
+    node_num = sum(topic_num)
+    node_index = cumsum(topic_num).tolist()[:-1]
+    node_index.insert(0, 0)
+    i = 0
+    for index in range(1, node_num):
+        if index < node_index[1]:
+            target_node = node_index[1]
+            if index not in source_nodes:
+                links.append({"source": index, "target": target_node, "value":1})
+        else:
+            source_node = node_index[i]
+            if index not in target_nodes:
+                    links.append({"source": source_node, "target": index, "value":1})
+            if i+2 < len(node_index) and index+1 == node_index[i+2]:
+                i += 1    
+                
+    return links
+
 
 def topicNum(inFile, fun):
     num = []
@@ -84,6 +111,7 @@ def createGraph(topicFiles, distanceFiles, topic_num, fun, clf_topic_stat=None):
     elif fun == 2:
         topic_num = np.array(topic_num)
     links = createLink(distanceFiles, topic_num, fun, clf_topic_stat)
+    links = addVirtualLink(links, topic_num)
 
     graph_data = {"nodes": nodes, "links": links}
     

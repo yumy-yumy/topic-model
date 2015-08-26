@@ -8,7 +8,7 @@ from src.backend import topic
 app = Flask(__name__)
 app.debug = True
 
-root_path = '/Users/kalleilv/desktop/topic-model/topic_data'
+root_path = '/home/pzwang/data/lda_new'
 
 def filter_independent_nodes(data):
     nodes_to_indexes = []
@@ -71,7 +71,8 @@ def topics_for_years(year_from, year_to):
     no_cycles = filter(lambda node: node['source'] != node['target'], independent_filtered['links'])
     independent_filtered['links'] = no_cycles
 
-    return json.dumps(independent_filtered)
+    #return json.dumps(independent_filtered)
+    return json.dumps(data)
 
 @app.route('/topics_for_year/<year>')
 def topics_for_year(year):
@@ -85,7 +86,7 @@ def topics_for_class(class_name):
     year_to=2015
     class_mode='arxiv-category'
 
-    data = topic.topics_for_class('acm-class', 'A.1', year_from, year_to)
+    data = topic.topics_for_class(class_mode, class_name, year_from, year_to)
 
     print data[1]
 

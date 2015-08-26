@@ -4,7 +4,9 @@ from src.backend import graph
 from src.backend import fileSys
 from src import ioFile
 
-root_path = '/Users/kalleilv/desktop/topic-model/topic_data'
+from src.backend import graph_new
+
+root_path = '/home/pzwang/data/lda_new'
 first_year = 1993
 
 def topics_from_to(start, end):
@@ -25,8 +27,9 @@ def topics_from_to(start, end):
     else:
         distanceFiles = fileSys.traverseDirectory(distance_dirpath, years)[1:]
 
-    topic_graph = graph.createGraph(topicFiles, distanceFiles, topic_num_file, 0)
+    #topic_graph = graph.createGraph(topicFiles, distanceFiles, topic_num_file, 0)
 
+    topic_graph = graph_new.createGraph(topicFiles, distanceFiles, topic_num_file, 0)
     return topic_graph
 
 def topics_for_year(year):
@@ -90,7 +93,9 @@ def topics_for_class(class_mode, class_name, start, end):
     else:
         distanceFiles = fileSys.traverseDirectory(distance_dirpath, years)[1:]
 
-    topic_graph = graph.createGraph(topicFiles, distanceFiles, topic_num, 2, clf_topic_stat)
+    #topic_graph = graph.createGraph(topicFiles, distanceFiles, topic_num, 2, clf_topic_stat)
+    
+    topic_graph = graph_new.createGraph(topicFiles, distanceFiles, topic_num, 2, clf_topic_stat)
 
     return topic_graph, years
 
