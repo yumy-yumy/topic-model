@@ -8,7 +8,7 @@ from src.backend import topic
 app = Flask(__name__)
 app.debug = True
 
-root_path = '/home/pzwang/data/lda_new'
+root_path = '/Users/kalleilv/desktop/topic-model/topic_data'
 
 def filter_independent_nodes(data):
     nodes_to_indexes = []
@@ -86,7 +86,7 @@ def topics_for_class(class_name):
     year_to=2015
     class_mode='arxiv-category'
 
-    data = topic.topics_for_class(class_mode, class_name, year_from, year_to)
+    data = topic.topics_for_class(class_mode, class_name.replace('+', ' '), year_from, year_to)
 
     print data[1]
 

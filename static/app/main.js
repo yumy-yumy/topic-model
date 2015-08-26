@@ -85,7 +85,7 @@ function initClassDiagram(year, className){
   $container.find('h1').html(`Topics of class "${className}"`);
   $container.find('#class-chart-timeline').show();
 
-  /*Api.getTopicsForClass({ className })
+  Api.getTopicsForClass({ className })
     .done(function(data){
       var decoded = JSON.parse(data);
 
@@ -97,9 +97,9 @@ function initClassDiagram(year, className){
         height: $(window).height() - 110
       });
     });
-    */
 
-  Api.getTopicsForYears(DEFAULT_YEAR_RANGE)
+
+  /*Api.getTopicsForYears(DEFAULT_YEAR_RANGE)
     .done(function(data){
       renderDiagram({
         data: JSON.parse(data),
@@ -108,7 +108,7 @@ function initClassDiagram(year, className){
         labels: generateLabels({ from: 1993, to: 2006 }),
         height: $(window).height() - 110
       });
-    });
+    });*/
 
   initClasses(year, className);
 }
