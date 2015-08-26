@@ -85,20 +85,21 @@ function initClassDiagram(year, className){
   $container.find('h1').html(`Topics of class "${className}"`);
   $container.find('#class-chart-timeline').show();
 
-  /*Api.getTopicsForClass({ className })
+ /*	
+  Api.getTopicsForClass({ className })
     .done(function(data){
       var decoded = JSON.parse(data);
 
       renderDiagram({
         data: decoded.topics,
-        target: document.getElementById('tree-canvas'),
+        target: document.getElementById('chart'),
         timelineTarget: document.getElementById('class-chart-timeline'),
         labels: decoded.years,
         height: $(window).height() - 110
       });
     });
-    */
-
+   */
+  
   Api.getTopicsForYears(DEFAULT_YEAR_RANGE)
     .done(function(data){
       renderDiagram({
@@ -109,8 +110,10 @@ function initClassDiagram(year, className){
         height: $(window).height() - 110
       });
     });
-
+  
+  
   initClasses(year, className);
+ 
 }
 
 Router
