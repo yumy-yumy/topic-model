@@ -1,4 +1,5 @@
 var $ = require('jquery');
+var _ = require('lodash');
 var d3 = require('../../node_modules/d3/d3.min');
 var sankeySetup = require('./sankey');
 var renderTimeline = require('./timeline');
@@ -8,7 +9,7 @@ sankeySetup(d3);
 module.exports = (options) => {
   options.target.innerHTML = '';
 
-  var widthForItem = 422;
+  var widthForItem = 480;
 
   var margin = {top: 1, right: 1, bottom: 6, left: 1},
       width = (widthForItem * (options.labels.length - 1)) - margin.left - margin.right,
@@ -50,6 +51,10 @@ module.exports = (options) => {
       .data(options.data.links)
     .enter().append("path")
       .attr("class", "link")
+      .attr("data-id", function(l){
+        l.id = _.uniqueId();
+        return l.id;
+      })
       .attr("d", path)
       .style("stroke-width", function(d) { return Math.max(1, d.dy); })
       .sort(function(a, b) { return b.dy - a.dy; });
@@ -57,28 +62,25 @@ module.exports = (options) => {
   link.append("title")
       .text(function(d) { return d.source.name + " → " + d.target.name + "\n" + format(d.value); });
 
-  link
-    .on('mouseover', function(d){
-      d3.select(this).style('stroke', d.source.color);
-    })
-    .on('mouseout', function(d){
-      d3.select(this).style('stroke', 'white');
-    });
-
   var node = svg.append("g").selectAll(".node")
       .data(options.data.nodes)
     .enter().append("g")
-      .attr("class", "node")
+      .attr("class", function(d){
+        var classes = "node";
+
+        if(d.targetLinks.length == 0 || _.where(d.targetLinks, { source: { name: '' } }).length > 0){
+          classes += " new";
+        }
+
+        return classes;
+      })
       .attr("transform", function(d) {
         return "translate(" + d.x + "," + d.y + ")";
       })
     .call(d3.behavior.drag()
       .origin(function(d) { return d; })
       .on("dragstart", function() { this.parentNode.appendChild(this); })
-      .on("drag", dragmove))
-      .on("dblclick", function(){
-        console.log(d3.select(this))
-      });
+      .on("drag", dragmove));
 
   node.append("rect")
       .attr("height", function(d) { return d.dy; })
@@ -87,6 +89,39 @@ module.exports = (options) => {
       .style("stroke", function(d) { return d3.rgb(d.color).darker(2); })
     .append("title")
       .text(function(d) { return d.name + "\n" + format(d.value); });
+
+  $('.new rect').each(function(){
+    var $elem = $(this);
+    $elem.css('filter', 'drop-shadow(0px 0px 5px ' + $elem.css('fill') + ')');
+  });
+
+  function highlightPath(node){
+    if(!node){
+      return;
+    }
+
+    node.sourceLinks.forEach(function(l){
+      var $linkElems = $('path[data-id=' + l.id + ']');
+
+      $linkElems.css({
+        'stroke': node.color,
+        'stroke-opacity': '1'
+      });
+
+      highlightPath(l.target)
+    });
+  }
+
+  node
+    .on('mouseover', function(d){
+      highlightPath(d);
+    })
+    .on('mouseout', function(d){
+      $(options.target).find('path').css({
+        'stroke': 'white',
+        'stroke-opacity': '0.2'
+      });
+    });
 
   node.append("text")
       .attr("x", -6)

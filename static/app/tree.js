@@ -4,7 +4,7 @@ module.exports = (options) => {
   options.target.innerHTML = '';
 
   var m = [0, 120, 20, 120],
-      w = 1280 - m[1] - m[3],
+      w = 2200 - m[1] - m[3],
       h = options.height - m[0] - m[2],
       i = 0,
       root;

@@ -8,19 +8,88 @@ body{
   background-color: @body-bg;
 }
 
-#visualization-settings-toggle{
-  .circle(10px);
+#loading-container{
+  .layer;
 
-  position: fixed;
-  left: 20px;
-  width: 49px;
+  z-index: 999;
+  text-align: center;
+
+
+  #loading-text{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2.5em;
+    font-weight: bold;
+    color: white;
+    display: inline-block;
+  }
+
+  .one {
+      opacity: 0;
+      -webkit-animation: dot 1.3s infinite;
+      -webkit-animation-delay: 0.0s;
+      animation: dot 1.3s infinite;
+      animation-delay: 0.0s;
+  }
+
+  .two {
+      opacity: 0;
+      -webkit-animation: dot 1.3s infinite;
+      -webkit-animation-delay: 0.2s;
+        animation: dot 1.3s infinite;
+        animation-delay: 0.2s;
+  }
+
+  .three {
+      opacity: 0;
+      -webkit-animation: dot 1.3s infinite;
+      -webkit-animation-delay: 0.3s;
+       animation: dot 1.3s infinite;
+       animation-delay: 0.3s;
+  }
+
+  @-webkit-keyframes dot {
+        0% { opacity: 0; }
+       50% { opacity: 0; }
+      100% { opacity: 1; }
+  }
+
+  @keyframes dot {
+        0% { opacity: 0; }
+       50% { opacity: 0; }
+      100% { opacity: 1; }
+  }
+}
+
+.btn-toggle{
+  background-color: transparent;
+  border: 1px solid white;
+  display: inline-block;
+  padding: 4px 10px;
   color: white;
-  background-color: rgba(0,0,0,.8);
-  font-size: 1.5em;
   cursor: pointer;
-  border: 0px none;
-  transition: 0.5s;
-  z-index: 101;
+}
+
+.btn-group{
+  button{
+    &.selected{
+      background-color: white;
+      color: rgb(60,60,60) !important;
+    }
+    &:first-child{
+      border-right: 0px none;
+    }
+  }
+
+}
+
+#back-to-topic-diagram{
+  .icon-button;
+}
+
+#visualization-settings-toggle{
+  .icon-button;
 
   &.active{
     background-color: white;
@@ -135,7 +204,7 @@ body{
   }
 
   .node text {
-    font-size: 11px;
+    font-size: 13px;
   }
 
   path.link {
@@ -147,51 +216,10 @@ body{
   #tree-canvas{
     margin-top: 48px;
   }
+}
 
-  #class-container{
-    width: 300px;
-    position: fixed;
-    right: -320px;
-    padding: 20px 20px 20px 120px;
-    transition: 0.5s;
-    top: 100px;
-
-    .clickable-class{
-      cursor: pointer;
-    }
-
-    &.bring-left{
-      border-left: 1px solid fadeout(white, 50%);
-      background-color: fadeout(black, 50%);
-      right: 0px;
-
-      #class-container-toggle{
-        color: white;
-        transition: 0.5s;
-      }
-    }
-
-    #class-container-toggle{
-      text-transform: uppercase;
-      color: fadeout(white, 50%);
-      position: absolute;
-      left: 20px;
-      top: 20px;
-      cursor: pointer;
-      transition: 0.5s;
-      font-weight: bold;
-
-      i{
-        font-size: 0.8em;
-        transition: 0.5s;
-      }
-
-      &:hover{
-        color: white;
-        transition: 0.5s;
-      }
-    }
-  }
+#class-container{
+  .right-navigation(350px);
 }
 
 #visualization-settings-container{
@@ -200,7 +228,7 @@ body{
   h1{
     position: absolute;
     left: 80px;
-    top: -4px;
+    top: 0px;
   }
 
   h1, h2{
@@ -287,7 +315,7 @@ body{
   text {
     pointer-events: none;
     font-family: @font-family;
-    font-size: 0.75em;
+    font-size: 1em;
     fill: @font-color;
     text-shadow: 0px 0px 1px rgba(0,0,0,.9)
   }
@@ -299,7 +327,7 @@ body{
   stroke-opacity: .2;
 
   &:hover{
-    stroke-opacity: 1;
+    stroke-opacity: 0.2;
   }
 }
 

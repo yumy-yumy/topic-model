@@ -7,7 +7,7 @@ var templateHTML = `
     <ul class="list-unstyled">
       <% classes.forEach(function(className){ %>
         <li>
-          <a href="#/topics/<%= year %>/classes/<%= className %>" class="<% if(selectedClass == className){ %>selected<% } %>">
+          <a href="#" data-name="<%= className %>" class="class-trigger <% if(selectedClass == className){ %>selected<% } %>">
             <%= className %>
           </a>
         </li>
