@@ -82,6 +82,7 @@ function initTopicTree(year){
 function initClassDiagram(className){
   $loadingContainer.addClass('show');
 
+
   Api.getTopicsForClass({ className })
     .done(function(data){
       var decoded = JSON.parse(data);
