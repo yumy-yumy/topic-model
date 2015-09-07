@@ -7,28 +7,31 @@ var renderDiagram = require('./diagram');
 var renderClasses = require('./classes');
 var renderTree = require('./tree');
 
-var Router = require('prouter').Router;
 var Api = require('./api');
 
 const DEFAULT_YEAR_RANGE = { from: 1993, to: 2006 };
+
+const $loadingContainer = $('#loading-container');
 
 function generateLabels(range){
   return _.range(range.from, range.to + 1);
 }
 
 function initTopicDiagram(){
-  if($('#chart').find('svg').length == 0){
-    Api.getTopicsForYears(DEFAULT_YEAR_RANGE)
-      .done(function(data){
-        renderDiagram({
-          data: JSON.parse(data),
-          target: document.getElementById('chart'),
-          timelineTarget: document.getElementById('chart-timeline'),
-          labels: generateLabels(DEFAULT_YEAR_RANGE),
-          height: $(window).height() - 110
-        });
+  $loadingContainer.addClass('show');
+
+  Api.getTopicsForYears(DEFAULT_YEAR_RANGE)
+    .done(function(data){
+      renderDiagram({
+        data: JSON.parse(data),
+        target: document.getElementById('chart'),
+        timelineTarget: document.getElementById('chart-timeline'),
+        labels: generateLabels(DEFAULT_YEAR_RANGE),
+        height: $(window).height() - 110
       });
-  }
+
+      $loadingContainer.removeClass('show');
+    });
 }
 
 function updateTopicDiagram(range){
@@ -44,13 +47,12 @@ function updateTopicDiagram(range){
     });
 }
 
-function initClasses(year, selectedClass){
+function initClasses(selectedClass){
   Api.getClasses()
     .done(function(data){
       renderClasses({
         target: document.getElementById('class-list'),
         classes: JSON.parse(data).classes,
-        year,
         selectedClass
       });
     });
@@ -60,7 +62,6 @@ function initTopicTree(year){
   var $container = $('#topic-tree-container');
   $container.addClass('show');
   $container.find('h1').html(`Topics in year ${year}`);
-  $container.find('#class-chart-timeline').hide();
 
   Api.getTopicsForYear({ year })
     .done(function(data){
@@ -74,16 +75,12 @@ function initTopicTree(year){
         height: $(window).height() - 60
       });
 
-      initClasses(year, null);
+      initClasses(null);
     });
 }
 
-function initClassDiagram(year, className){
-  var $container = $('#topic-tree-container');
-  $container.addClass('show');
-  $container.find('#class-container-toggle i').removeClass('fa-chevron-left').addClass('fa-chevron-right');
-  $container.find('h1').html(`Topics of class "${className}"`);
-  $container.find('#class-chart-timeline').show();
+function initClassDiagram(className){
+  $loadingContainer.addClass('show');
 
 
   Api.getTopicsForClass({ className })
@@ -93,62 +90,59 @@ function initClassDiagram(year, className){
       renderDiagram({
         data: decoded.topics,
         target: document.getElementById('chart'),
-        timelineTarget: document.getElementById('class-chart-timeline'),
+        timelineTarget: document.getElementById('chart-timeline'),
         labels: decoded.years,
         height: $(window).height() - 110
       });
+
+      $loadingContainer.removeClass('show');
     });
-
-  
-
-
-  /*Api.getTopicsForYears(DEFAULT_YEAR_RANGE)
-    .done(function(data){
-      renderDiagram({
-        data: JSON.parse(data),
-        target: document.getElementById('tree-canvas'),
-        timelineTarget: document.getElementById('class-chart-timeline'),
-        labels: generateLabels({ from: 1993, to: 2006 }),
-        height: $(window).height() - 110
-      });
-    });*/
-  
-  
-
-  initClasses(year, className);
- 
 }
 
-Router
-  .use('/', function(req) {
+var states = {
+  'TOPIC_DIAGRAM': function(){
     $('.background-layer').removeClass('show');
+    $('#visualization-settings-toggle').addClass('bring-right');
+    $('#back-to-topic-diagram').removeClass('bring-right');
 
+    initClasses(null);
     initTopicDiagram();
-  })
-  .use('/topics/:year', function(req){
-    initTopicDiagram();
-    initTopicTree(req.params.year);
-  })
-  .use('/topics/:year/classes/:className', function(req){
-    initTopicDiagram();
-    initClassDiagram(req.params.year, req.params.className);
-
+  },
+  'CLASS_DIAGRAM': function(className){
+    $('#visualization-settings-toggle').removeClass('bring-right');
+    $('#back-to-topic-diagram').addClass('bring-right');
     $('#class-container').addClass('bring-left');
-  })
-  .use(function(req){
-    $('.background-layer').removeClass('show');
 
-    initTopicDiagram();
-  });
-
-Router.listen({
-  root: '/',
-  usePushState: false,
-  hashChange: true,
-  silent: false
-});
+    initClasses(className);
+    initClassDiagram(className);
+  },
+  'YEAR_DIAGRAM': function(year){
+    initTopicTree(year);
+  }
+}
 
 $(function(){
+  states['TOPIC_DIAGRAM']();
+
+  $('body')
+    .on('click', '.class-trigger', function(e){
+      e.preventDefault();
+      states['CLASS_DIAGRAM']($(this).data('name'));
+    })
+    .on('click', '.year-trigger', function(e){
+      e.preventDefault();
+      states['YEAR_DIAGRAM']($(this).data('year'));
+    });
+
+  $('#back-to-topic-diagram').on('click', function(){
+    states['TOPIC_DIAGRAM']();
+  });
+
+  $('.background-layer .close-button').on('click', function(e){
+    e.preventDefault();
+    $(this).parent('.background-layer').removeClass('show');
+  });
+
   $('#settings-years-title').html(`Show me topics between ${DEFAULT_YEAR_RANGE.from} and ${DEFAULT_YEAR_RANGE.to}.`);
 
   $('#visualization-settings-toggle').on('click', function(){

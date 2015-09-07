@@ -5,7 +5,7 @@ var templateHTML = `
   <ul class="timeline">
     {{#each labels}}
       <li class="timeline-item">
-        <a href="#/topics/{{this}}">{{this}}</a>
+        <a href="#" class="year-trigger" data-year="{{this}}">{{this}}</a>
       </li>
     {{/each}}
   </ul>

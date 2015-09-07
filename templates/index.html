@@ -6,7 +6,8 @@
     <link rel="stylesheet" type="text/css" href="static/css/visualization.css"/>
   </head>
   <body>
-    <button id="visualization-settings-toggle"><i class="fa fa-cog"></i></button>
+    <button id="back-to-topic-diagram"><i class="fa fa-arrow-left"></i></button>
+    <button id="visualization-settings-toggle"><i class="fa fa-ellipsis-h"></i></button>
 
     <div id="topic-tree-container" class="background-layer">
       <h1></h1>
@@ -14,22 +15,15 @@
       <div id="tree-canvas">
       </div>
 
-      <div id="class-chart-timeline">
-      </div>
-
       <a href="#" class="close-button">
         <i class="fa fa-times"></i>
       </a>
 
-      <div id="class-container">
-        <div id="class-container-toggle"><i class="fa fa-chevron-left"></i> Classes</div>
+    </div>
 
-        <div id="class-list">
-        </div>
-
-        <p class="text-muted" style="margin-bottom: 0px">
-          <i class="fa fa-hand-pointer-o"></i> Click a class to see its visualization
-        </p>
+    <div id="loading-container">
+      <div id="loading-text">
+        Loading<span class="one">.</span><span class="two">.</span><span class="three">.</span>
       </div>
     </div>
 
@@ -48,6 +42,17 @@
           </p>
         </div>
       </div>
+    </div>
+
+    <div id="class-container">
+      <div class="navigation-toggle" id="class-container-toggle"><i class="fa fa-chevron-left"></i> Classes</div>
+
+      <div id="class-list">
+      </div>
+
+      <p class="text-muted" style="margin-bottom: 0px">
+        <i class="fa fa-hand-pointer-o"></i> Click a class to see its visualization
+      </p>
     </div>
 
     <div id="visualization-container">

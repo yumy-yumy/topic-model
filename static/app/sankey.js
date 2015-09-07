@@ -173,10 +173,11 @@ module.exports = function(d3){
 
         return _.max(targets) + 1;
       }
-    }
+    }  
 
     function scaleNodeBreadths(kx) {
       nodes.forEach(function(node) {
+        //console.log(node)
         node.x = pathLength(node);
         node.x *= kx;
       });
