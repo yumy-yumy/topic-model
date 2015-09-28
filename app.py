@@ -8,7 +8,7 @@ from src.backend import topic
 app = Flask(__name__)
 app.debug = True
 
-root_path = '/Users/kalleilv/desktop/topic-model/topic_data'
+root_path = '/home/pzwang/data/lda_new'
 
 def filter_independent_nodes(data):
     nodes_to_indexes = []
@@ -82,7 +82,7 @@ def topics_for_year(year):
 
 @app.route('/topics_for_class/<class_name>')
 def topics_for_class(class_name):
-    year_from=1998
+    year_from=1993
     year_to=2015
     class_mode='arxiv-category'
 

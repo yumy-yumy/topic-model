@@ -16,8 +16,8 @@ def abstractsToFile(all_abstract, fname):
         for abstract in all_abstract:
             fileWriter.write(abstract)
     
-def statToFile(item, fname):
-    """Write year and number of docuemnts to the csv file"""
+def dataToCSV(item, fname):
+    """Write to the csv file"""
     with open(fname, 'a') as csvfile:
         fileWriter = csv.writer(csvfile, delimiter=',')
         fileWriter.writerow(item)
