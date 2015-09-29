@@ -17,6 +17,8 @@
     "jquery-ui": "^1.10.5",
     "lodash": "^3.10.0",
     "prouter": "^2.1.6",
+    "raphael": "^2.1.4",
+    "raphael-browserify": "^2.1.0",
     "router": "^1.1.2"
   },
   "devDependencies": {

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="static/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="static/bower_components/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="static/css/statistics.css"/>
+  </head>
+  <body>
+    <div id="topic-tooltip"></div>
+
+    <div id="statistics-container">
+      <div id="category-chart">
+        <h1 id="category-title"></h1>
+
+        <h2>Topics' frequency each year</h2>
+
+        <div id="topic-chart"></div>
+
+        <hr/>
+
+        <div id="category-topic-list"></div>
+      </div>
+
+      <div id="category-list" style="border-left: 1px solid rgb(220,220,220)">
+        <h4>Categories</h4>
+
+        <ul class="nav nav-pills nav-stacked" id="category-links"></ul>
+      </div>
+    </div>
+
+    <script src="static/statistics.min.js"></script>
+  </body>
+</html>

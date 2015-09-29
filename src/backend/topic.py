@@ -6,7 +6,7 @@ from src import ioFile
 
 from src.backend import graph_new
 
-root_path = '/home/pzwang/data/lda_new'
+root_path = '/Users/kalleilv/desktop/topic-model/topic_data'
 first_year = 1993
 
 def topics_from_to(start, end):
@@ -94,7 +94,7 @@ def topics_for_class(class_mode, class_name, start, end):
         distanceFiles = fileSys.traverseDirectory(distance_dirpath, years)[1:]
 
     #topic_graph = graph.createGraph(topicFiles, distanceFiles, topic_num, 2, clf_topic_stat)
-    
+
     topic_graph = graph_new.createGraph(topicFiles, distanceFiles, topic_num, 2, clf_topic_stat)
 
     return topic_graph, years

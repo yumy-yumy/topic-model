@@ -1,0 +1,53 @@
+html, body{
+  height: 100%;
+}
+
+#statistics-container{
+  display: table;
+  width: 100%;
+}
+
+#category-chart, #category-list{
+  display: table-cell;
+  vertical-align: top;
+}
+
+#category-chart{
+  padding: 0px 25px 25px 25px;
+  width: 75%;
+}
+
+#topic-tooltip{
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	z-index: 3;
+	display: none;
+	color: white;
+	max-width: 250px;
+	padding: 4px 8px;
+	border-radius: 3px;
+	background-color: rgba(0,0,0,.8);
+}
+
+#category-list{
+  position: relative;
+  width: 25%;
+  overflow-y: scroll;
+  max-height: 100%;
+  position: fixed;
+}
+
+#category-list h4{
+  border-bottom: 1px solid rgb(220,220,220);
+  padding: 15px;
+  margin: 0px;
+  background-color: white;
+}
+
+.nav-pills{
+}
+
+.nav-pills li a{
+  border-radius: 0px !important;
+}

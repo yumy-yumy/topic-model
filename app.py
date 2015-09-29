@@ -113,5 +113,9 @@ def classes(class_mode='acm-class'):
 
     return json.dumps({ 'classes': class_arr })
 
+@app.route('/statistics')
+def category_statistics():
+    return render_template('statistics.html')
+
 if __name__ == '__main__':
     app.run()
