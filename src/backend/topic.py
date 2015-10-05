@@ -7,37 +7,27 @@ from src import ioFile
 from src.backend import graph_new
 
 root_path = '/Users/kalleilv/desktop/topic-model/topic_data'
-first_year = 1993
+model_path = path.join(root_path, 'lda_model')
 
 def topics_from_to(start, end):
-    years = set(range(start, end+1))
+    years = range(start, end+1)
 
-    # fill the path where models are stored
-    topicFiles = fileSys.traverseTopicDirecotry(path.join(root_path, 'lda_model'), 1, years)
+    topicFiles = fileSys.traverseTopicDirecotry(model_path, 1, years)
 
     # fill the path where topic_num.csv is stored
     topic_num_dirpath = path.join(root_path, 'topic_num')
     topic_num_file = fileSys.traverseDirectory(topic_num_dirpath, years)
-
     # fill the path where distances are stored
-    distance_dirpath = path.join(root_path, 'graph_horizontal/distance')
+    distance_dirpath = path.join(root_path, 'distance')
+    distanceFiles = fileSys.traverseDistanceDirectory(distance_dirpath, years)
 
-    if start == first_year:
-        distanceFiles = fileSys.traverseDirectory(distance_dirpath, years)
-    else:
-        distanceFiles = fileSys.traverseDirectory(distance_dirpath, years)[1:]
+    topic_graph = graph.createGraph(topicFiles, distanceFiles, topic_num_file, 0)
 
-    #topic_graph = graph.createGraph(topicFiles, distanceFiles, topic_num_file, 0)
-
-    topic_graph = graph_new.createGraph(topicFiles, distanceFiles, topic_num_file, 0)
     return topic_graph
 
 def topics_for_year(year):
-    # fill the path where models are stored
-    model_path = path.join(root_path, 'lda_model', str(year))
 
-    topic_dirpath = path.join(model_path, 'topic')
-    topicFiles = fileSys.traverseDirectory(topic_dirpath)
+    topicFiles = fileSys.traverseDirectory(path.join(root_path, 'lda_model', str(year), 'topic'))
 
     '''
     # fill the path where topic_num.csv files are stored
@@ -45,9 +35,7 @@ def topics_for_year(year):
     inFile = ioFile.statFromFile(topic_num_file)
     '''
 
-    distance_dirpath = path.join(model_path, 'distance')
-
-    distanceFiles = fileSys.traverseDirectory(distance_dirpath)
+    distanceFiles = fileSys.traverseDirectory(path.join(root_path, 'lda_model', str(year), 'distance'))
 
     topic_tree = graph.createTree(topicFiles, distanceFiles)
 
@@ -84,18 +72,11 @@ def topics_for_class(class_mode, class_name, start, end):
         except KeyError:
             years.remove(year)
 
-    # fill the path where models are stored
-    topicFiles = fileSys.traverseTopicDirecotry(path.join(root_path, 'lda_model'), 1, years)
+    topicFiles = fileSys.traverseTopicDirecotry(model_path, 1, years)
+    distance_dirpath = path.join(root_path, 'distance')
+    distanceFiles = fileSys.traverseDistanceDirectory(distance_dirpath, list(years))
 
-    distance_dirpath = path.join(root_path, 'graph_horizontal/distance')
-    if start == first_year:
-        distanceFiles = fileSys.traverseDirectory(distance_dirpath, years)
-    else:
-        distanceFiles = fileSys.traverseDirectory(distance_dirpath, years)[1:]
-
-    #topic_graph = graph.createGraph(topicFiles, distanceFiles, topic_num, 2, clf_topic_stat)
-
-    topic_graph = graph_new.createGraph(topicFiles, distanceFiles, topic_num, 2, clf_topic_stat)
+    topic_graph = graph.createGraph(topicFiles, distanceFiles, topic_num, 2, clf_topic_stat)
 
     return topic_graph, years
 
@@ -103,3 +84,24 @@ def get_classes(fname):
     class_list = ioFile.load_object(fname)
 
     return class_list
+
+def statistics_for_class(class_mode, class_name):
+    if class_mode == 'acm-class':
+        clf_topic = ioFile.load_object(path.join(root_path, 'class_topic/class_topic_acm-class.pkl'))
+    elif class_mode == 'arxiv-category':
+        clf_topic = ioFile.load_object(path.join(root_path, 'class_topic/class_topic_arxiv-category.pkl'))
+
+    clf_topic_stat = []
+    years = []
+    for year in range(1993, 2016):
+        try:
+            clf_topic_stat.append(Counter(clf_topic[str(year)][class_name]))
+            years.append(year)
+        except KeyError:
+            print "No documents belonging to %s in %s " % (class_name, year)
+
+    topicFiles = fileSys.traverseTopicDirecotry(model_path, 1, years)
+
+    topic_bar = graph.createBarChat(topicFiles, clf_topic_stat, years)
+
+    return topic_bar

@@ -82,7 +82,7 @@ def topics_for_year(year):
 
 @app.route('/topics_for_class/<class_name>')
 def topics_for_class(class_name):
-    year_from=1998
+    year_from=1993
     year_to=2015
     class_mode='arxiv-category'
 
