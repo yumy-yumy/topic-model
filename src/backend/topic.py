@@ -16,7 +16,7 @@ def topics_from_to(start, end):
     topic_num_dirpath = path.join(root_path, 'topic_num')
     topic_num_file = fileSys.traverseDirectory(topic_num_dirpath, years)
     # fill the path where distances are stored
-    distance_dirpath = path.join(root_path, 'distance')
+    distance_dirpath = path.join(root_path, 'dtm/distance')
     distanceFiles = fileSys.traverseDistanceDirectory(distance_dirpath, years)
 
     topic_graph = graph.createGraph(topicFiles, distanceFiles, topic_num_file, 0)
