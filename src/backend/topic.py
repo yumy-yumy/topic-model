@@ -80,7 +80,12 @@ def topics_for_class(class_mode, class_name, start, end):
 
     return topic_graph, years
 
-def get_classes(fname):
+def get_classes(class_mode):
+    if class_mode == 'acm-class':
+        fname = path.join(root_path, 'class_topic', 'acm_class.pkl')
+    elif class_mode == 'arxiv-category':
+        fname = path.join(root_path, 'class_topic', 'arxiv_category.pkl')
+        
     class_list = ioFile.load_object(fname)
 
     return class_list

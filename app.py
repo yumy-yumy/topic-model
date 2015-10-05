@@ -8,8 +8,6 @@ from src.backend import topic
 app = Flask(__name__)
 app.debug = True
 
-root_path = '/Users/kalleilv/desktop/topic-model/topic_data'
-
 def filter_independent_nodes(data):
     nodes_to_indexes = []
 
@@ -100,12 +98,7 @@ def topics_for_class(class_name):
 
 @app.route('/class/<class_mode>')
 def classes(class_mode='acm-class'):
-    if class_mode == 'acm-class':
-        fname = path.join(root_path, 'class_topic', 'acm_class.pkl')
-    elif class_mode == 'arxiv-category':
-        fname = path.join(root_path, 'class_topic', 'arxiv_category.pkl')
-
-    class_list = topic.get_classes(fname)
+    class_list = topic.get_classes(class_mode)
     class_arr = []
 
     for key,value in class_list.iteritems():
