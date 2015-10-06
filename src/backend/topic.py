@@ -27,28 +27,11 @@ def topics_for_year(year):
 
     topicFiles = fileSys.traverseDirectory(path.join(root_path, 'lda_model', str(year), 'topic'))
 
-    '''
-    # fill the path where topic_num.csv files are stored
-    topic_num_file = path.join(root_path, 'topic_num','topic_num_' + str(year) + '.csv')
-    inFile = ioFile.statFromFile(topic_num_file)
-    '''
-
     distanceFiles = fileSys.traverseDirectory(path.join(root_path, 'lda_model', str(year), 'distance'))
 
     topic_tree = graph.createTree(topicFiles, distanceFiles)
 
     return topic_tree
-
-    '''
-    fun = 1
-    nodes = graph.createNode(topicFiles)
-    topic_num = graph.topicNum(inFile, fun)
-    links = graph.createLink(distanceFiles, topic_num, fun)
-
-    graph_data = {"nodes": nodes, "links": links}
-
-    return graph_data
-    '''
 
 '''
 example:
