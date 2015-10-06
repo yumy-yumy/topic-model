@@ -8,6 +8,7 @@ def traverseDirectory(dirpath, years=None):
     full_fnames = []
     for fname in filenames:
         fname = path.join(dirpath, fname)
+        print fname
         if years is not None:
             year = int(re.findall('[0-9]{4}', fname)[0])
         if path.isfile(fname):
