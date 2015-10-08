@@ -1,26 +1,19 @@
-var Raphael = require('raphael');
-var _ = require('lodash');
-var $ = require('jquery');
+import Raphael from 'raphael';
+import _ from 'lodash';
 
 const Chart = (options) => {
 
   const showTooltip = (title, event) => {
-    var $tooltip = $('#topic-tooltip');
-
-    $tooltip.html(title);
-
-    $tooltip.css({
-      left: ( event.clientX + 10 ) + 'px',
-      top: ( event.clientY + 10 ) + 'px'
-    });
-
-    $tooltip.show();
+    let tooltip =  document.getElementById('topic-tooltip');
+    tooltip.innerHTML = title;
+    tooltip.style.left = ( event.clientX + 10 ) + 'px';
+    tooltip.style.top = ( event.clientY + 10 ) + 'px';
+    tooltip.style.display = 'initial';
   }
 
   const hideTooltip = () => {
-    var $tooltip = $('#topic-tooltip');
-
-    $tooltip.hide();
+    let tooltip =  document.getElementById('topic-tooltip');
+    tooltip.style.display = 'none';
   }
 
   const darkenColor = (color, percent) => {
@@ -51,21 +44,20 @@ const Chart = (options) => {
     return color;
   }
 
-  var $target = options.target;
+  var target = options.target;
   var width = options.width;
   var height = options.height;
 
   var data = options.data;
 
-  $target.empty();
+  target.innerHTML='';
 
-  const raphael = Raphael($target[0], width, height);
+  const raphael = Raphael(target, width, height);
   const textColor = '#777';
   const lineColor = '#DDD';
   const barWidth = 20;
 
   const render = () => {
-    // Skeleton rendering
     var labelWidth = width / data.length;
     var dummyLabel = raphael.text(0, 0, data[0].year)
     var textWidth = dummyLabel.getBBox().width;
@@ -88,18 +80,17 @@ const Chart = (options) => {
       raphael.path(`M ${labelX} ${labelY - 10}L${labelX} 0`).attr({ stroke: lineColor });
       raphael.text(labelX, labelY, year.year).attr({ fill: textColor });
 
-      var topicSum = _.sum(year.topics, 'weight');
       var yPointer = topicBartStartY;
 
       year.topics.forEach(topic => {
-        var barHeight = ( topic.weight / topicSum ) * maxHeight;
+        var barHeight = topic.weight * maxHeight;
         var barX = labelX - barWidth / 2;
 
         var bgColor = nextColor();
         var bar = raphael.rect(barX, yPointer - barHeight, barWidth, barHeight).attr({ fill: bgColor, 'stroke-width': 0 });
         bar
           .mousemove(function(event){
-            showTooltip(topic.title, event);
+            showTooltip(topic.title.join(', '), event);
             bar.attr('fill', darkenColor(bgColor, -10));
           })
           .mouseout(function(){
@@ -116,4 +107,4 @@ const Chart = (options) => {
   render();
 }
 
-module.exports = Chart;
+export default Chart;

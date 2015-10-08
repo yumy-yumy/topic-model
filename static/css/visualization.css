@@ -324,7 +324,7 @@ body {
   stroke-width: 1.5px;
 }
 #topic-tree-container .node text {
-  font-size: 13px;
+  font-size: 15px;
 }
 #topic-tree-container path.link {
   fill: none;

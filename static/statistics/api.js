@@ -1,12 +1,14 @@
-var $ = require('jquery');
-var _ = require('lodash');
+import $ from 'jquery';
+import _ from 'lodash';
 
 const Api = {
   getAllCategories(){
     return $.get('/class/arxiv-category');
   },
   getTopicsFromCategory(category){
-    return {
+
+    return $.get(`/statistics_for_class/${category.replace(/ /g, '+')}`)
+    /*return {
       done: function(callback){
         var years = [];
         _.times(23, function(i){
@@ -23,8 +25,8 @@ const Api = {
 
         callback(years);
       }
-    }
+    }*/
   }
 };
 
-module.exports = Api;
+export default Api;
