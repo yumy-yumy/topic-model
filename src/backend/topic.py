@@ -4,7 +4,9 @@ from src.backend import graph
 from src.backend import fileSys
 from src import ioFile
 
-root_path = '/home/pzwang/data/lda_new'
+from src.backend import graph_new
+
+root_path = '/Users/kalleilv/desktop/topic-model/topic_data'
 model_path = path.join(root_path, 'lda_model')
 
 def topics_from_to(start, end):
@@ -20,7 +22,7 @@ def topics_from_to(start, end):
     distanceFiles = fileSys.traverseDistanceDirectory(distance_dirpath, years)
 
     topic_graph = graph.createGraph(topicFiles, distanceFiles, topic_num_file, 0)
-    
+
     return topic_graph
 
 def topics_for_year(year):
@@ -56,7 +58,7 @@ def topics_for_class(class_mode, class_name, start, end):
     topicFiles = fileSys.traverseTopicDirecotry(model_path, 1, years)
     distance_dirpath = path.join(root_path, 'class_topic/distance')
     distanceFiles = fileSys.traverseDistanceDirectory(distance_dirpath, list(years))
-    
+
     topic_graph = graph.createGraph(topicFiles, distanceFiles, topic_num, 2, clf_topic_stat)
 
     return topic_graph, years
@@ -76,7 +78,7 @@ def statistics_for_class(class_mode, class_name):
         clf_topic = ioFile.load_object(path.join(root_path, 'class_topic/class_topic_acm-class.pkl'))
     elif class_mode == 'arxiv-category':
         clf_topic = ioFile.load_object(path.join(root_path, 'class_topic/class_topic_arxiv-category.pkl'))
-    
+
     clf_topic_stat = []
     years = []
     for year in range(1993, 2016):
@@ -85,9 +87,9 @@ def statistics_for_class(class_mode, class_name):
             years.append(year)
         except KeyError:
             print "No documents belonging to %s in %s " % (class_name, year)
-            
+
     topicFiles = fileSys.traverseTopicDirecotry(model_path, 1, years)
-    
+
     topic_bar = graph.createBarChat(topicFiles, clf_topic_stat, years)
-    
+
     return topic_bar

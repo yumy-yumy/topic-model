@@ -87,6 +87,8 @@ module.exports = function(d3){
         node.targetLinks = [];
       });
       links.forEach(function(link) {
+        console.log(link);
+        console.log(nodes.length);
         var source = link.source,
             target = link.target;
         if (typeof source === "number") source = link.source = nodes[link.source];
@@ -173,7 +175,7 @@ module.exports = function(d3){
 
         return _.max(targets) + 1;
       }
-    }  
+    }
 
     function scaleNodeBreadths(kx) {
       nodes.forEach(function(node) {
