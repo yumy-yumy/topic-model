@@ -4,9 +4,7 @@ from src.backend import graph
 from src.backend import fileSys
 from src import ioFile
 
-from src.backend import graph_new
-
-root_path = '/Users/kalleilv/desktop/topic-model/topic_data'
+root_path = '/home/pzwang/data/cs'
 model_path = path.join(root_path, 'lda_model')
 
 def topics_from_to(start, end):

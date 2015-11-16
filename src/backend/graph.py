@@ -2,6 +2,8 @@ import numpy as np
 from numpy import cumsum
 from src import ioFile
 
+distance_constraint = 0.7
+
 def createNode(filenames, clf_topic_stat=None):
     nodes = []
     i = 0
@@ -42,7 +44,8 @@ def createLink(filenames, topic_num, fun, clf_topic_stat=None):
             for index_i in range(0, N):
                 distance = np.array(distances[index_i])
                 if fun == 0:
-                    index = np.where(distance<0.5)[0]
+                    index = np.where(distance<distance_constraint)[0]
+                    print index
                     for index_j in index:
                         links.append({"source": node_index_i+index_i, "target": node_index_j+index_j, "value": 5})
                 elif fun == 1:
@@ -51,7 +54,7 @@ def createLink(filenames, topic_num, fun, clf_topic_stat=None):
         elif fun == 2:
             for index_i, count in clf_topic_stat[i].iteritems():
                 distance = np.array(distances[index_i])
-                index = set(np.where(distance<0.5)[0])
+                index = set(np.where(distance<distance_constraint)[0])
                 index = index.intersection(set(clf_topic_stat[i+1].keys()))
                 for index_j in index:
                     links.append({"source": node_index_i+clf_topic_stat[i].keys().index(index_i), 
@@ -150,7 +153,7 @@ def createBarChat(topicFiles, clf_topic_stat, years):
         clf_topic = clf_topic_stat[i]
         year = years[i]
         doc_num, topic_percent = statOfClassification(clf_topic, topics)
-        print topic_percent
+        #print topic_percent
         bar_data.append({"year": year, "doc": doc_num, "topics": topic_percent})
         
         
