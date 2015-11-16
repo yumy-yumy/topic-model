@@ -31,6 +31,7 @@ const Chart = (options) => {
   }
 
   var colorUsage = {};
+  var topicsToColor = {}
 
   const nextColor = () => {
     var color = generateColor();
@@ -78,7 +79,14 @@ const Chart = (options) => {
 
       var labelX = textWidth / 2 + labelWidth * i;
       raphael.path(`M ${labelX} ${labelY - 10}L${labelX} 0`).attr({ stroke: lineColor });
-      raphael.text(labelX, labelY, year.year).attr({ fill: textColor });
+      raphael.text(labelX, labelY, year.year).attr({ fill: textColor })
+      .mousemove(function(event){
+        var pluralized = data[i].doc == 1 ? 'document' : 'documents';
+        showTooltip(`${data[i].doc} ${pluralized} from this year`, event);
+      })
+      .mouseout(function(){
+        hideTooltip();
+      });
 
       var yPointer = topicBartStartY;
 
@@ -86,11 +94,18 @@ const Chart = (options) => {
         var barHeight = topic.weight * maxHeight;
         var barX = labelX - barWidth / 2;
 
-        var bgColor = nextColor();
+        var bgColor;
+
+        if(!topicsToColor[topic.title.join(', ')]){
+          bgColor = nextColor();
+        }else{
+          bgColor = topicsToColor[topic.title.join(', ')];
+        }
+
         var bar = raphael.rect(barX, yPointer - barHeight, barWidth, barHeight).attr({ fill: bgColor, 'stroke-width': 0 });
         bar
           .mousemove(function(event){
-            showTooltip(topic.title.join(', '), event);
+            showTooltip(`${topic.title.join(', ')} (${Math.round(topic.weight * 100)}%)`, event);
             bar.attr('fill', darkenColor(bgColor, -10));
           })
           .mouseout(function(){

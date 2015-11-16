@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="treeApp">
+  <head>
+    <link rel="stylesheet" type="text/css" href="static/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="static/bower_components/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="static/bower_components/animate.css/animate.min.css"/>
+    <link rel="stylesheet" type="text/css" href="static/css/tree.css"/>
+
+    <script src="static/bower_components/angular/angular.min.js"></script>
+    <script src="static/bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="static/bower_components/lodash/lodash.min.js"></script>
+    <script src="static/tree.min.js"></script>
+  </head>
+  <body ng-controller="TopicTreeController as tree">
+    <div id="left-container" ng-class="{ 'expanded': tree.expanded }">
+      <div ng-if="tree.topicIsChosen" id="start-search">
+        <button class="btn btn-default btn-lg btn-block" ng-click="tree.startSearch()"><i class="fa fa-search"></i> Start a search</button>
+      </div>
+
+      <div id="topic-container">
+        <div class="container" ng-class="{ 'chosen': topic.chosen, 'activated': topic.activated }" ng-repeat="topic in tree.topics | limitTo: tree.topicDisplayLimit">
+          <div class="topic-container">
+            <div class="topic-title">
+              {[topic.title]}
+            </div>
+            <div class="topic-toolbar">
+              <i class="fa fa-check" ng-click="tree.toggleChooseTopic(topic)"></i>
+              <i class="fa" ng-class="{ 'fa-plus': !topic.activated, 'fa-minus': topic.activated }" ng-click="tree.toggleActivateTopic(topic)"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="more-topics" ng-if="tree.topicDisplayLimit < tree.topics.length">
+        <button class="btn btn-success btn-lg btn-block" ng-click="tree.loadMoreTopics()"><i class="fa fa-plus"></i> Load more topics</button>
+      </div>
+    </div>
+
+    <div id="right-container" ng-if="!tree.expanded">
+      <ul class="topic-list">
+        <li ng-repeat="topic in tree.activeTopic.children" ng-include="'topic-node'"></li>
+      </ul>
+
+      <div ng-if="!tree.activeTopic.children" class="text-muted" style="padding: 15px 20px;">
+        "{[tree.activeTopic.title]}" doesn't have any sub topics.
+      </div>
+    </div>
+
+    <script type="text/ng-template" id="topic-node">
+      <div class="topic-container">
+        <i class="fa fa-check choser" ng-class="{ 'chosen': topic.chosen }" ng-click="tree.toggleChooseTopic(topic)"></i>
+        {[topic.title]}
+        <i class="fa expander" ng-if="topic.children" ng-class="{ 'fa-plus': !topic.expanded, 'fa-minus': topic.expanded }" ng-click="tree.toggleExpandTopic(topic)"></i>
+      </div>
+      <ul ng-if="topic.expanded && topic.children">
+        <li ng-repeat="topic in topic.children" ng-include="'topic-node'"></li>
+      </ul>
+    </script>
+  </body>
+</html>

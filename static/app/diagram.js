@@ -66,7 +66,7 @@ module.exports = (options) => {
       .data(options.data.nodes)
     .enter().append("g")
       .attr("class", function(d){
-        var classes = "node";
+        var classes = "node sankey-node";
 
         if(d.targetLinks.length == 0 || _.where(d.targetLinks, { source: { name: '' } }).length > 0){
           classes += " new";
@@ -112,15 +112,81 @@ module.exports = (options) => {
     });
   }
 
-  node
-    .on('mouseover', function(d){
-      highlightPath(d);
-    })
-    .on('mouseout', function(d){
-      $(options.target).find('path').css({
+  function highlightTargetLinks(node){
+    if(!node){
+      return;
+    }
+
+    node.targetLinks.forEach(function(l){
+      var $linkElems = $('path[data-id=' + l.id + ']');
+
+      $linkElems.css({
+        'stroke': node.color,
+        'stroke-opacity': '1'
+      });
+
+      highlightTargetLinks(l.source)
+    });
+  }
+
+  function unHighlightTargetLinks(node){
+    if(!node){
+      return;
+    }
+
+    node.targetLinks.forEach(function(l){
+      var $linkElems = $('path[data-id=' + l.id + ']');
+
+      $linkElems.css({
         'stroke': 'white',
         'stroke-opacity': '0.2'
       });
+
+      highlightTargetLinks(l.source)
+    });
+  }
+
+  function unHighlightPath(node){
+    if(!node){
+      return;
+    }
+
+    node.sourceLinks.forEach(function(l){
+      var $linkElems = $('path[data-id=' + l.id + ']');
+
+      $linkElems.css({
+        'stroke': 'white',
+        'stroke-opacity': '0.2'
+      });
+
+      unHighlightPath(l.target)
+    });
+  }
+
+  node
+    .on('mouseover', function(d){
+      //highlightPath(d);
+    })
+    .on('mouseout', function(d){
+      /*$(options.target).find('path').css({
+        'stroke': 'white',
+        'stroke-opacity': '0.2'
+      });*/
+    })
+    .on('dblclick', function(d){
+      var elem = d3.select(this);
+
+      if(elem.attr('data-chosen') == 'true'){
+        options.nodeOnClick(d.name, false);
+        elem.attr('data-chosen', 'false');
+        unHighlightTargetLinks(d);
+        unHighlightPath(d);
+      }else{
+        options.nodeOnClick(d.name, true);
+        elem.attr('data-chosen', 'true');
+        highlightTargetLinks(d);
+        highlightPath(d);
+      }
     });
 
   node.append("text")

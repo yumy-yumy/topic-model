@@ -1,0 +1,193 @@
+body{
+  background-color: rgb(230,230,230);
+}
+
+#left-container.expanded{
+  width: 100%;
+}
+
+#right-container{
+  position: fixed;
+  right: 0px;
+  top: 0px;
+  width: 400px;
+  height: 100%;
+  overflow-y: scroll;
+  box-shadow: -2px 0px 2px 1px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  z-index: 99;
+}
+
+#right-container.ng-enter{
+  animation: bounceInRight 0.5s;
+}
+
+#right-container.ng-leave{
+  animation: bounceOutRight 0.5s;
+}
+
+#right-container ul{
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+#right-container ul li{
+}
+
+#right-container ul li .topic-container{
+  padding: 10px 50px 10px 50px;
+  position: relative;
+}
+
+#right-container ul.ng-enter{
+  animation: bounceInDown 0.5s;
+}
+
+#right-container ul.ng-leave{
+  animation: bounceOutUp 0.5s;
+}
+
+
+#right-container .topic-container .expander{
+  position: absolute;
+  right: 20px;
+  top: 13px;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+#right-container .topic-container .expander:hover{
+  opacity: 1;
+}
+
+#right-container .topic-container .choser{
+  position: absolute;
+  left: 20px;
+  top: 13px;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+#right-container .topic-container .choser.chosen{
+  color: #337AB7;
+  opacity: 1;
+}
+
+#right-container > ul > li .topic-container {
+  border-bottom: 1px solid rgb(220,220,220);
+}
+
+#right-container ul > li > ul > li .topic-container{
+  background-color: rgb(230,230,230);
+  border-bottom: 1px solid rgb(200,200,200);
+}
+
+#right-container ul > li > ul > li > ul > li .topic-container{
+  background-color: rgb(210,210,210);
+  border-bottom: 1px solid rgb(190,190,190);
+}
+
+#right-container ul > li > ul > li > ul > li > ul > li .topic-container{
+  background-color: rgb(190,190,190);
+  border-bottom: 1px solid rgb(170,170,170);
+}
+
+#left-container{
+  width: calc(100% - 400px);
+}
+
+#start-search .btn{
+  border-radius: 0px;
+}
+
+#start-search.ng-enter{
+  animation: bounceIn 0.5s;
+}
+
+#start-search.ng-leave{
+  animation: bounceOut 0.5s;
+}
+
+#topic-container:after{
+  visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+}
+
+#more-topics.ng-enter{
+  animation: bounceIn 0.5s;
+}
+
+#more-topics.ng-leave{
+  animation: bounceOut 0.5s;
+}
+
+#more-topics .btn{
+  border-radius: 0px;
+}
+
+.container{
+    background-color: white;
+    width: 25%;
+    height: 120px;
+    position: relative;
+    float: left;
+    border-left: 1px solid rgb(220,220,220);
+    border-bottom: 1px solid rgb(220,220,220);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.container.ng-enter{
+  animation: bounceIn 0.5s;
+}
+
+.container:hover{
+  background-color: #E6E6E6;
+  border-color: #ADADAD;
+}
+
+.container.activated{
+  background-color: #E6E6E6;
+  border-color: #ADADAD;
+}
+
+.container.chosen{
+  background-color: #337AB7;
+  color: white;
+  border-color: #2E6DA4;
+}
+
+.container .topic-container{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    box-sizing: border-box;
+    width: 100%;
+    display: block;
+    left: 0px;
+    padding: 10px;
+    text-align: center;
+}
+
+.container.chosen .fa-check{
+  opacity: 1 !important;
+}
+
+.container .topic-toolbar .fa{
+  cursor: pointer;
+  opacity: 0.5;
+  padding: 10px 5px 0px 5px;
+}
+
+.container .topic-toolbar .fa:hover{
+  opacity: 1;
+}

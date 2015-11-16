@@ -10,8 +10,27 @@ var renderTree = require('./tree');
 var Api = require('./api');
 
 const DEFAULT_YEAR_RANGE = { from: 1993, to: 2006 };
+const PULP_URL = 'http://localhost:8000/search';
+
+var chosenKeywords = [];
+var chosenYearRange = Object.assign({}, DEFAULT_YEAR_RANGE);
 
 const $loadingContainer = $('#loading-container');
+
+function clickTopicInSankey(text, chosen){
+  if (chosen) {
+    chosenKeywords.push(text)
+  } else {
+    var removedIndex = 0;
+    chosenKeywords.forEach(function(keyword, i){
+      if(keyword == text){
+        removedIndex = i;
+      }
+    });
+
+    chosenKeywords.splice(removedIndex, 1);
+  }
+}
 
 function generateLabels(range){
   return _.range(range.from, range.to + 1);
@@ -27,7 +46,8 @@ function initTopicDiagram(){
         target: document.getElementById('chart'),
         timelineTarget: document.getElementById('chart-timeline'),
         labels: generateLabels(DEFAULT_YEAR_RANGE),
-        height: $(window).height() - 110
+        height: $(window).height() - 110,
+        nodeOnClick: clickTopicInSankey
       });
 
       $loadingContainer.removeClass('show');
@@ -42,7 +62,8 @@ function updateTopicDiagram(range){
         target: document.getElementById('chart'),
         timelineTarget: document.getElementById('chart-timeline'),
         labels: generateLabels(range),
-        height: $(window).height() - 110
+        height: $(window).height() - 110,
+        nodeOnClick: clickTopicInSankey
       });
     });
 }
@@ -61,13 +82,14 @@ function initClasses(selectedClass){
 function initTopicTree(year){
   var $container = $('#topic-tree-container');
   $container.addClass('show');
-  $container.find('h1').html(`Topics in year ${year}`);
+  var $heading = $container.find('h1')
+  $heading.html(`Topics in year ${year}`);
 
   Api.getTopicsForYear({ year })
     .done(function(data){
       var tree = JSON.parse(data);
 
-      tree.name = `Topics in year ${year}`;
+      tree.name = `${year}`;
 
       renderTree({
         target: document.getElementById('tree-canvas'),
@@ -81,7 +103,6 @@ function initTopicTree(year){
 
 function initClassDiagram(className){
   $loadingContainer.addClass('show');
-
 
   Api.getTopicsForClass({ className })
     .done(function(data){
@@ -134,6 +155,16 @@ $(function(){
       states['YEAR_DIAGRAM']($(this).data('year'));
     });
 
+  $('#to-pulp-trigger').on('click', function(){
+    var query = _.uniq(_.uniq(chosenKeywords).join(' ').split(' ')).join(' ').replace(/\s/g, '+');
+    console.log(query)
+    console.log(chosenKeywords);
+    var year_from = chosenYearRange.from;
+    var year_to = chosenYearRange.to;
+
+    window.open(`${PULP_URL}#/?query=${query}&year_from=${year_from}&year_to=${year_to}`, '_blank');
+  });
+
   $('#back-to-topic-diagram').on('click', function(){
     states['TOPIC_DIAGRAM']();
   });
@@ -171,6 +202,8 @@ $(function(){
       if(end - start < 4){
         return false;
       }
+
+      chosenYearRange = Object.assign(chosenYearRange, { from: start, to: end });
 
       $('#settings-years-title').html(`Show me topics between ${start} and ${end}.`);
     },

@@ -8,6 +8,31 @@ body{
   background-color: @body-bg;
 }
 
+.star-toggle{
+  opacity: 0.5;
+  transition: 0.5s;
+  font-size: 0.8em;
+  cursor: pointer;
+
+  &:hover, &.chosen{
+    opacity: 1;
+    transition: 0.5s;
+  }
+
+  &.chosen{
+    color: #5CB85C;
+  }
+}
+
+.year-trigger{
+  transition: 0.5s;
+
+  &.chosen{
+    color: #5CB85C !important;
+    transition: 0.5s;
+  }
+}
+
 #loading-container{
   .layer;
 
@@ -297,12 +322,44 @@ body{
   }
 }
 
+#year-range-container{
+  width: 290px;
+  position: fixed;
+  left: 100px;
+  top: 20px;
+
+  p{
+    position: relative;
+    top: -8px;
+    left: -8px;
+  }
+}
+
 #visualization-container{
   padding: 60px 20px 0px 20px;
 }
 
+#to-pulp-trigger{
+  .icon-button;
+
+  left: 410px !important;
+
+  &.bring-right{
+    left: 410px !important;
+  }
+}
+
 #chart {
   height: 600px;
+}
+
+g{
+  &[data-chosen=true] text{
+    fill: #5CB85C !important;
+    font-weight: bold;
+    transition: 0.5s;
+    text-shadow: 0px 0px 1px rgba(0,0,0,.9) !important;
+  }
 }
 
 .node{
@@ -317,7 +374,7 @@ body{
     font-family: @font-family;
     font-size: 1em;
     fill: @font-color;
-    text-shadow: 0px 0px 1px rgba(0,0,0,.9)
+    text-shadow: 0px 0px 1px rgba(0,0,0,.9);
   }
 }
 
