@@ -26,7 +26,7 @@ gulp.task('scripts', function() {
       .pipe(concat('tree.min.js'))
       .pipe(gulp.dest('./static/'));
 
-    return sankey;
+    return merge(sankey, statistics, tree);
 });
 
 gulp.task('less', function () {
