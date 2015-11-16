@@ -8,7 +8,7 @@ All client files are located in `static` folder. The folder contains three major
 
 All these scripts are minified with gulp task `scripts` to files `build.min.js` (sankey), `statistics.min.js` (statistics) and `tree.min.js` (topic tree).
 
-There's also a `less` folder containing all the less code which will be compiled to the `css` folder by gulp task `less`.
+There's also a `less` folder containing all the less code which will be compiled to the `css` folder by gulp task `less`. The `css` folder also contains other css-files.
 
 All the templates files are located in the `templates` folder.
 
