@@ -1,14 +1,21 @@
 # Preprocessing
 
 1. extract necessary informartion and group data by year
+
 preXml.py
+
 input: a .xml file
+
 output: several .txt files by year, where each line is formatted by [category/id/...]\t[text]\n
 
 2. remove duplicates
+
 preTxt.py
+
 input: a .txt file
+
 output: a .txt file only containing text and without duplicates
+
 batch mode:txt.sh
 
 # Training LDA Model
