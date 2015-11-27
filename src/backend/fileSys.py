@@ -18,7 +18,7 @@ def traverseDirectory(dirpath, years=None):
     return full_fnames
 
 '''
-fun=0, bottom level topics; fun=1, top level topics 
+fun=0, bottom-level topics; fun=1, top-level topics 
 '''
 def traverseTopicDirecotry(dirpath, fun, years=None):
     for (dirpath, dirnames, filenames) in walk(dirpath):

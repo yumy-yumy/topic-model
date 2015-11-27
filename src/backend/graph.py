@@ -2,7 +2,7 @@ import numpy as np
 from numpy import cumsum
 from src import ioFile
 
-distance_constraint = 0.7
+distance_constraint = 0.5
 
 def createNode(filenames, clf_topic_stat=None):
     nodes = []
@@ -42,19 +42,18 @@ def createLink(filenames, topic_num, fun, clf_topic_stat=None):
         if fun < 2:
             N = len(distances)
             for index_i in range(0, N):
-                distance = np.array(distances[index_i])
+                clf_topic = np.array(distances[index_i])
                 if fun == 0:
-                    index = np.where(distance<distance_constraint)[0]
-                    print index
+                    index = np.where(clf_topic<distance_constraint)[0]
                     for index_j in index:
                         links.append({"source": node_index_i+index_i, "target": node_index_j+index_j, "value": 5})
                 elif fun == 1:
-                    index = np.where(distance==distance.min())[0][0]
+                    index = np.where(clf_topic==clf_topic.min())[0][0]
                     links.append({"source": node_index_i+index_i, "target": node_index_j+index, "value": 5})
         elif fun == 2:
             for index_i, count in clf_topic_stat[i].iteritems():
-                distance = np.array(distances[index_i])
-                index = set(np.where(distance<distance_constraint)[0])
+                clf_topic = np.array(distances[index_i])
+                index = set(np.where(clf_topic<distance_constraint)[0])
                 index = index.intersection(set(clf_topic_stat[i+1].keys()))
                 for index_j in index:
                     links.append({"source": node_index_i+clf_topic_stat[i].keys().index(index_i), 

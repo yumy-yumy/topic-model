@@ -16,8 +16,8 @@ def topics_from_to(start, end):
     topic_num_dirpath = path.join(root_path, 'topic_num')
     topic_num_file = fileSys.traverseDirectory(topic_num_dirpath, years)
     # fill the path where distances are stored
-    distance_dirpath = path.join(root_path, 'dtm/distance')
-    distanceFiles = fileSys.traverseDistanceDirectory(distance_dirpath, years)
+    clf_topic = path.join(root_path, 'dtm/distance')
+    distanceFiles = fileSys.traverseDistanceDirectory(clf_topic, years)
 
     topic_graph = graph.createGraph(topicFiles, distanceFiles, topic_num_file, 0)
 
@@ -54,8 +54,8 @@ def topics_for_class(class_mode, class_name, start, end):
             years.remove(year)
 
     topicFiles = fileSys.traverseTopicDirecotry(model_path, 1, years)
-    distance_dirpath = path.join(root_path, 'class_topic/distance')
-    distanceFiles = fileSys.traverseDistanceDirectory(distance_dirpath, list(years))
+    clf_topic = path.join(root_path, 'class_topic/distance')
+    distanceFiles = fileSys.traverseDistanceDirectory(clf_topic, list(years))
 
     topic_graph = graph.createGraph(topicFiles, distanceFiles, topic_num, 2, clf_topic_stat)
 
@@ -91,3 +91,10 @@ def statistics_for_class(class_mode, class_name):
     topic_bar = graph.createBarChat(topicFiles, clf_topic_stat, years)
 
     return topic_bar
+
+def topics_for_cs():
+    topicFiles = fileSys.traverseDirectory(path.join(root_path, 'htm/topic'))
+    distanceFiles = fileSys.traverseDirectory(path.join(root_path, 'htm/distance'))
+    topic_tree = graph.createTree(topicFiles, distanceFiles)
+    
+    return topic_tree
