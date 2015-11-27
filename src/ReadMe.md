@@ -1,13 +1,13 @@
 # Preprocessing
 
-1. `preXml.py` extract necessary informartion and group data by year
-2. `preTxt.py` remove duplicates
+1. `preprocess/preXml.py` extract necessary informartion and group data by year
+2. `preprocess/preTxt.py` remove duplicates
 
 # Training LDA Model
 
-1. `dtm/dtm_vocabulary.py` build a vocabulary
-2. `dtm/dtm_mult.py` convert documents to the format required by the model
-3. `graph/topic_num_stat.py` create a sequence of topic nums
+1. `ldaPy/vocabulary.py` build a vocabulary
+2. `ldaPy/mult.py` convert documents to the format required by the model
+3. `ldaPy/topic_num_seq.py` create a sequence of topic nums for htm
 4. train LDA [Blei-Lab/lda-c](https://github.com/Blei-Lab/lda-c)
 5. collect results by LDA (extract final.other, final.gamma and final.beta from outputs)
 
