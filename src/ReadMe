@@ -1,4 +1,5 @@
 # Preprocessing
+
 1 extract necessary informartion and group data by year 
 preXml.py
 input: a .xml file
@@ -36,6 +37,7 @@ batch mode:batch_train.sh
 extract final.other, final.gamma and final.beta from outputs
 
 # Drawing Graphs
+
 1 save results from .beta and .gamma to .pkl file and convert shape of matrix(so that in the future we do not have to read these large files again and again)
 ldaPy/read_prob.py
 input: a .txt file 
