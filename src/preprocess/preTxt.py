@@ -1,3 +1,12 @@
+'''
+function: remove duplicate articles and calculate the number of documents
+input: a .txt file
+output: a .txt file only containing text and without duplicates, and a .csv file recording the number of documents
+batch mode: shell/text.sh
+'''
+
+
+
 import sys
 from optparse import OptionParser
 

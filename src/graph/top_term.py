@@ -1,3 +1,10 @@
+'''
+function: extract top terms of each topic
+input: a .pkl file contains topic distributions and a .dat file represents the vocabulary
+output: a .pkl file contains a list of topics
+batch mode: shell/topic.sh
+'''
+
 import sys
 from optparse import OptionParser
 

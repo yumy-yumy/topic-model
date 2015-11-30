@@ -1,3 +1,11 @@
+'''
+fucntion: extract necessary information such as date, category, text of articles and group data by year 
+preXml.py
+input: a .xml file
+output: several .txt files by year, where each line is formatted by [category/id/...]\t[text]\n
+'''
+
+
 import sys
 from optparse import OptionParser
 

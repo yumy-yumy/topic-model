@@ -1,3 +1,10 @@
+'''
+function: compute distances for all pairs of topics
+input: two .pkl file contains topic distributions for two years(dtm) or two layers(htm)
+output: a .pkl file contains the matrix of distances
+batch mode: shell/distances.sh(dtm), shell/distance.sh(htm)
+'''
+
 import sys
 from optparse import OptionParser
 

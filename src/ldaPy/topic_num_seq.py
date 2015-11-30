@@ -1,3 +1,9 @@
+'''
+fucntion:create a sequence of topic nums for htm
+input: a .csv file contains numbers of documents for each year
+output: a list of .csv file contains topic nums and inital value of the alpha parameter
+'''
+
 import sys
 from optparse import OptionParser
 

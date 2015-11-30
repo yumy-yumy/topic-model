@@ -1,3 +1,10 @@
+'''
+function: read probability from a .txt file and save it to a .pkl file
+input: a .txt file 
+output: a .pkl file contains the matrix
+batch mode: shell/prob.sh
+'''
+
 import sys
 from optparse import OptionParser
 

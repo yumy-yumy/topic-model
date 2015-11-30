@@ -1,3 +1,10 @@
+'''
+function: build a vocabulary from all texts
+input: a .txt file contains all data
+output: a all_term.dat file contains all terms
+'''
+
+
 import sys
 from optparse import OptionParser
 #from os import walk, path

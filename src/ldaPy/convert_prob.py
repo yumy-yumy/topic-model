@@ -1,3 +1,10 @@
+'''
+function: align topic distributions with the same number of columns
+input: a .pkl file contains the original matrix 
+output: a .pkl file contains the converted one
+batch mode: shell/prob.sh
+''''
+
 import sys
 from optparse import OptionParser
 
