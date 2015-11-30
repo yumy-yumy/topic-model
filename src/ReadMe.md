@@ -1,7 +1,7 @@
 # Preprocessing
 
 1. `preprocess/preXml.py` extract necessary informartion and group data by year
-2. `preprocess/preTxt.py` remove duplicates
+2. `preprocess/preTxt.py` remove duplicate articles
 
 # Training LDA Model
 
