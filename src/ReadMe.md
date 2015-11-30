@@ -13,7 +13,7 @@
 
 # Drawing Graphs
 
-1. `ldaPy/read_prob.py` save results from .beta and .gamma to .pkl files and convert shape of matrix(so that in the future we do not have to read these large files again and again)
+1. `ldaPy/read_prob.py` & `ldaPy/convert_prob.py` save results from .beta and .gamma to .pkl files and convert shape of matrix(so that in the future we do not have to read these large files again and again)
 2. `graph/top_term.py` obtain top terms of topics
 3. `graph/compute_distance.py` compute distances between topics
 4. `backend/graph.py` draw graph
