@@ -32,6 +32,8 @@ Output: a data structure encoding the tree
 
 # Dynamic Time Graph of Category
 
+A graph shows how topics under a category changes over time.
+
 Algorithm:
 
 Input: a set of documents published in different years
