@@ -4,7 +4,7 @@ Dynamic time graph is designed to discover how topics change over time.
 
 Algorithm:
 
-Input: a set of documents
+Input: a set of documents published in different years
 
 Output: a data structure encoding graph
 
@@ -31,3 +31,17 @@ Output: a data structure encoding the tree
 
 
 # Dynamic Time Graph of Category
+
+Algorithm:
+
+Input: a set of documents published in different years
+
+Output: a set of data structures encoding graphs for categories
+
+1. Group data by year.
+2. For each year, obtain posterior distributions of documents from LDA. 
+   Then, for each document, label it as a topic with highest probability. 
+   Last, for each category related to the document, associate the topic with it.
+3. For each category, count statistic information about topics.
+4. Draw dynamic time graphs for each category separately.
+
