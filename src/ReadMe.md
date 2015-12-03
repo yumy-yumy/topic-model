@@ -17,6 +17,7 @@
 2. `graph/top_term.py` obtain top terms of topics
 3. `graph/compute_distance.py` compute distances between topics
 4. `backend/graph.py` draw graph
+5.  `graph/topic_of_class.py` count topics of each category for all years
 
 
 
