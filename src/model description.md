@@ -2,11 +2,11 @@
 
 Dynamic time graph is designed to discover how topics change over time.
 
+Algorithm:
+
 Input: a set of documents
 
 Output: a data structure encoding graph
-
-Algorithm:
 
 1. Set a constraint on Hellinger distance Hmax.
 2. Group data by year.
@@ -19,11 +19,11 @@ Algorithm:
 
 It is a tree where topics on upper levels are parent topics to those on lower levels.
 
+Alogrithm:
+
 Input: a set of documents published in the same year
 
 Output: a data structure encoding the tree
-
-Alogrithm:
 
 1. Compute a set of reasonable topic numbers based on the number of documents.
 2. For each topic num, train LDA to obtain topic distributions.
