@@ -4,7 +4,8 @@ input: a directory of the folder containing document topic distributions, a dire
        a directory of the folder containing topics
        a directory of the folder containing categories of documents
        a file recording dictionary of classes' code and their full names
-output: a .pkl file contains a list of topics for each category over time
+output: a .pkl file contains a two level dictionary of topics for each category over time
+        format: dict[year][class name] = a list of indices of topics (they are repeatable)
 '''
 
 

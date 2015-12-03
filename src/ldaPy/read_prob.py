@@ -1,7 +1,7 @@
 '''
 function: read probability from a .txt file and save it to a .pkl file
 input: a .txt file 
-output: a .pkl file contains the matrix
+output: a .pkl file contains the prob matrix where each column is a topic distribution over the vocabulary
 batch mode: shell/prob.sh
 '''
 

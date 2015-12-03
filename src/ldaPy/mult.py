@@ -2,6 +2,7 @@
 function: convert text to the format required by lda-c
 input: a .txt file contains text & all_term.dat
 output: a foo-mult.data contains the modeling data
+        format of each line: [number of unique terms] [the index of the term: the number of its occurrence] ...
 batch mode: shell/batch_data.sh
 '''
 
