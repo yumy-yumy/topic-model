@@ -23,7 +23,8 @@ All the templates files are located in the `templates` folder.
 
 # Running
 
-1. Go to the directory of where you put the code
-2. Type command `virtualenv env`
-3. Type command `source env/bin/active`
-4. Type command `python app.py`
+1. Go to the directory of where you put the code.
+2. Type command `virtualenv env`.
+3. Type command `source env/bin/active`.
+4. Type command `python app.py`.
+5. Click the link given by prompt to open the webpage.
