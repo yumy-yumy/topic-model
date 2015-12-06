@@ -20,3 +20,10 @@ All the templates files are located in the `templates` folder.
 
 * To build the minified script files, run `gulp scripts`.
 * To compile less, run `gulp less`.
+
+# Running
+
+1. Go to the directory of where you put the code
+2. Type command `envirtual env`
+3. Type command `source env/bin/active`
+4. Type command `python app.py`
