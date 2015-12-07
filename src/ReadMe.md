@@ -6,7 +6,7 @@ This is the tutorial about how to generate the topic model data.
 
 # 1. Preprocessing
 
-1. The raw data is assumed to be a .xml file contains all articles.
+  1.1. The raw data is assumed to be a .xml file contains all articles.
 
 In the terminal, type 
 
@@ -17,7 +17,7 @@ It extracts necessary informartion such as abstract and category of an atrticle.
 The output is a set of .txt files where each of them contains extracted data in the same year.
 In the .txt file, each line represents an article by the format of [id/category]\t[text].
 
-2. We then need extract texts from .txt files in step 1. Also there may exist duplicate articles and they should be removed. 
+  1.2. We then need extract texts from .txt files in step 1. Also there may exist duplicate articles and they should be removed. 
 
 Run 
 
