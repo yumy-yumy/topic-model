@@ -33,7 +33,7 @@ To run it in batch mode, use the shell script by
 
 # 2. Training LDA Model
 
-2.1. Creat a .txt file contains articles from all years. For Linux, run
+2.1. Create a .txt file contains articles of all years. For Linux, run
 
 `cat /home/text/* > all_text.txt`,
 
@@ -45,7 +45,10 @@ Be cautious, you need to move `/home/text/stat.csv` out of the folder at first.
 
 `python ldaPy/vocabulary.py -f all_text.txt -o all_term.dat`. 
 
-2.3. Convert the data to the format required by the model which is [the number of unique terms] [term_1]:[count] [term_2]:[count] ...  [term_N]:[count].
+2.3. Convert the data to the format required by the model which means each line is in the form of 
+
+[the number of unique terms] [term_1]:[count] [term_2]:[count] ...  [term_N]:[count].
+
 Type
 
 `ldaPy/mult.py -f /home/text/text_1998.txt -t all_term.dat -o /home/mult/foo-mult-1998.dat` .
