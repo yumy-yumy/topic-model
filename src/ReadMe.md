@@ -1,4 +1,10 @@
-# Preprocessing
+`backend` is the backend of the web application.
+
+`graph, ldaPy, preprocess` are used to generate the topic model data to be visualized by the web application.
+
+This is the tutorial about how to generate the topic model data.
+
+# 1. Preprocessing
 
 1. `preprocess/preXml.py` extract necessary informartion and group data by year
 2. `preprocess/preTxt.py` remove duplicate articles
