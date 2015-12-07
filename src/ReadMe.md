@@ -17,7 +17,7 @@ It extracts necessary informartion such as abstract and category of an atrticle.
 The output is a set of .txt files where each of them contains extracted data in the same year.
 In the .txt file, each line represents an article by the format of [id/category]\t[text].
 
-  1.2. We then need extract texts from .txt files in step 1. Also there may exist duplicate articles and they should be removed. 
+  1.2. We then need extract texts from .txt files in step 1.2. Also there may exist duplicate articles and they should be removed. 
 
 Run 
 
@@ -28,7 +28,7 @@ The output is a `text_1998.txt` file only contains texts of articles without dup
 A `stat.csv` file is created if it does not exist and a line in the format of `[1998] [the number of articles]` is added to this file.
 
 
-# Training LDA Model
+# 2. Training LDA Model
 
 1. `ldaPy/vocabulary.py` build a vocabulary
 2. `ldaPy/mult.py` convert documents to the format required by the model
