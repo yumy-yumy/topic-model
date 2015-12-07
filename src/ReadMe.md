@@ -5,6 +5,7 @@
 This is the tutorial about how to generate the topic model data.
 
 # 1. Preprocessing
+
 1. The raw data is assumed to be a .xml file contains all articles.
 
 In the terminal, type 
@@ -12,11 +13,19 @@ In the terminal, type
 `python preXml.py -f raw_data.xml -o /home/data` 
 
 , where `raw_data.xml` is the file contains raw data and  `/home/data` is the outpath to save results.
-It extracts necessary informartion such as abstract and category of an atrticle and the output is a set of .txt files where each of them contains extracted data in the same year.
+It extracts necessary informartion such as abstract and category of an atrticle.
+The output is a set of .txt files where each of them contains extracted data in the same year.
+In the .txt file, each line represents an article by the format of [id/category]\t[text].
 
-2. There may exit duplicate articles.
-Run `python rm_dup.py -f data.txt -o `
+2. We then need extract texts from .txt files in step 1. Also there may exist duplicate articles and they should be removed. 
 
+Run 
+
+`python extract_text.py -f data_1998.txt -o /home/text`
+
+, where `data_1998.txt` is the input .txt file containing articles in 1998 and similary, `/home/text` is the output path.
+The output is a `text_1998.txt` file only contains texts of articles without duplicates. 
+A `stat.csv` file is created if it does not exist and a line in the format of `[1998] [the number of articles]` is added to this file.
 
 
 # Training LDA Model
