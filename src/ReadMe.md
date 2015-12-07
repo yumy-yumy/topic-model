@@ -10,7 +10,7 @@ This is the tutorial about how to generate the topic model data.
 
 In the terminal, type 
 
-`python preXml.py -f raw_data.xml -o /home/data` 
+`python preprocess/preXml.py -f raw_data.xml -o /home/data` 
 
 , where `raw_data.xml` is the file contains raw data and  `/home/data` is the outpath to save results.
 It extracts necessary informartion such as abstract and category of an atrticle.
@@ -21,22 +21,45 @@ In the .txt file, each line represents an article by the format of [id/category]
 
 Run 
 
-`python extract_text.py -f data_1998.txt -o /home/text`
+`python preprocess/extract_text.py -f data_1998.txt -o /home/text`
 
 , where `data_1998.txt` is the input .txt file containing articles in 1998 and similary, `/home/text` is the output path.
 The output is a `text_1998.txt` file only contains texts of articles without duplicates. 
 A `stat.csv` file is created if it does not exist and a line in the format of `[1998] [the number of articles]` is added to this file.
 
+To run it in batch mode, use the shell script by
+
+`shell/text.sh /home/data /home/text`.
 
 # 2. Training LDA Model
 
-1. `ldaPy/vocabulary.py` build a vocabulary
-2. `ldaPy/mult.py` convert documents to the format required by the model
+2.1. Creat a .txt file contains articles from all years. For Linux, run
+
+`cat /home/text/* > all_text.txt`,
+
+where `/home/text` is the outpath in step 1.2 contains a set of text files.
+Be cautious, you need to move `/home/text/stat.csv` out of the folder at first.
+
+
+2.2 Build a vocabulary by running
+
+`python ldaPy/vocabulary.py -f all_text.txt -o all_term.dat`. 
+
+2.3. Convert the data to the format required by the model which is [the number of unique terms] [term_1]:[count] [term_2]:[count] ...  [term_N]:[count].
+Type
+
+`ldaPy/mult.py -f /home/text/text_1998.txt -t all_term.dat -o /home/mult/foo-mult-1998.dat` .
+
+Use the shell scripts to process them in batch mode by
+
+`shell/batch_data.sh /home/text /home/mult all_term.dat`.
+
 3. `ldaPy/topic_num_seq.py` create a sequence of topic nums for htm
+
 4. train LDA [Blei-Lab/lda-c](https://github.com/Blei-Lab/lda-c)
 5. collect results of LDA (extract final.other, final.gamma and final.beta from outputs)
 
-# Drawing Graphs
+# 3, Computing distances and extracting topics
 
 1. `ldaPy/read_prob.py` & `ldaPy/convert_prob.py` save results from .beta and .gamma to .pkl files and convert shape of matrix(so that in the future we do not have to read these large files again and again)
 2. `graph/top_term.py` obtain top terms of topics
