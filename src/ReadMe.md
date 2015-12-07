@@ -13,7 +13,6 @@ In the terminal, type
 
 , where `raw_data.xml` is the file contains raw data and  `/home/data` is the outpath to save results.
 It extracts necessary informartion such as abstract and category of an atrticle and the output is a set of .txt files where each of them contains extracted data in the same year.
-
 2. There may exit duplicate articles.
 Run `python rm_dup.py -f data.txt -o `
 
