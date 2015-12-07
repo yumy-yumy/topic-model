@@ -1,13 +1,16 @@
 `backend` is the backend of the web application.
 
-`graph, ldaPy, preprocess` are used to generate the topic model data to be visualized by the web application.
+`graph, ldaPy, preprocess` are used to generate the topic model data to be visualized by the web application and they are independent of `backend`.
 
 This is the tutorial about how to generate the topic model data.
 
 # 1. Preprocessing
+1. The raw data is assumed to be a .xml file contains all articles.
+In the terminal, type `python preXml.py -f raw_data.xml -o /home/data`, where `raw_data.xml` is the file contains raw data and  `/home/data` is the outpath to save results.
+It extracts necessary informartion such as abstract and category of an atrticle and the output is a set of .txt files where each of them contains extracted data in the same year. 
 
-1. `preprocess/preXml.py` extract necessary informartion and group data by year
-2. `preprocess/preTxt.py` remove duplicate articles
+2. There may exit duplicate articles 
+`preprocess/preTxt.py` remove duplicate articles
 
 # Training LDA Model
 
