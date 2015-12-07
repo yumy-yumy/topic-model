@@ -1,5 +1,5 @@
 '''
-function: remove duplicate articles and calculate the number of documents
+function: extract texts of articles, remove duplicate articles and calculate the number of articles
 input: a .txt file
 output: a .txt file only containing text and without duplicates, and a .csv file recording the number of documents
 batch mode: shell/text.sh
@@ -12,7 +12,7 @@ from optparse import OptionParser
 
 import ioFile
 
-def removeDuplicate(data_iterator, year, outpath):
+def extractNondupText(data_iterator, year, outpath):
     '''Remove duplicate records and write the number of documents to a .csv file'''
     data = []
     for line in data_iterator:
@@ -61,6 +61,6 @@ if __name__ == "__main__":
 
     year = options.input[-8:-4]
     
-    removeDuplicate(inFile, year, outpath)
+    extractNondupText(inFile, year, outpath)
 
     
