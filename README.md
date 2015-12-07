@@ -27,4 +27,4 @@ All the templates files are located in the `templates` folder.
 2. Type command `virtualenv env`.
 3. Type command `source env/bin/active`.
 4. Type command `python app.py`.
-5. Click the link given by prompt to open the webpage.
+5. Click the link in the prompt to open the webpage. By default, it is `http://127.0.0.1:5000/`.
