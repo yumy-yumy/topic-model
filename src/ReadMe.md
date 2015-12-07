@@ -6,7 +6,9 @@ This is the tutorial about how to generate the topic model data.
 
 # 1. Preprocessing
 1. The raw data is assumed to be a .xml file contains all articles.
-In the terminal, type `python preXml.py -f raw_data.xml -o /home/data` 
+In the terminal, type 
+
+`python preXml.py -f raw_data.xml -o /home/data` 
 
 , where `raw_data.xml` is the file contains raw data and  `/home/data` is the outpath to save results.
 It extracts necessary informartion such as abstract and category of an atrticle and the output is a set of .txt files where each of them contains extracted data in the same year. 
