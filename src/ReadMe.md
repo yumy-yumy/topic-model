@@ -117,12 +117,34 @@ The script creates a folder named `prob` under each model directory and put resu
 
 Run
 
-`python graph/topic_term.py -f /home/lda_model/1998/prob/prob_0.pkl -t /home/all_term.dat -o /home/lda_model/1998/topic_0.pkl`.
+`python graph/topic_term.py -f /home/lda_model/1998/prob/prob_0.pkl -t /home/all_term.dat -o /home/lda_model/1998/topic_0.pkl`,
+
+which stores a list of topics represented by its top 5 terms.
+
+In the batch mode, use
+
+`shell/topic.sh /home/lda_model /home/all_term.dat`.
+
+Similarly in the step 3.1, it creates a folder `topic` under each model and put results there.
 
 3.3. Compute distances between topics.
 Run
 
-`python graph/compute_distance.py -f /home/lda_model/1998/prob/convert_prob_0.pkl -g /home/lda_model/1998/prob/convert_prob_1.pkl`.
+`python graph/compute_distance.py -f /home/lda_model/1998/prob/convert_prob_0.pkl -g /home/lda_model/1998/prob/convert_prob_1.pkl -o distance_0_1.pkl`.
+
+The output is a distance matrix where each element (i,j) represents the distance between topic i to topic j.
+
+In the batch mode, for dynamic time graph, use
+
+`shell/distances.sh /home/lda_model /home/dtm/distance`,
+
+which computes topics in the topmost level from two different years and saves results in `/home/dtm/distance`.
+
+For hierarchy topic graph, use
+
+`shell/distance.sh /home/lda_model`,
+
+it creates a folder `topic` under each model and save results there.
  
 3.4.  `graph/topic_of_class.py` count topics of each category for all years
 
