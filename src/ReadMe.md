@@ -6,7 +6,7 @@ This is the tutorial about how to generate the topic model data.
 
 # 1. Preprocessing
 
-  1.1. The raw data is assumed to be a .xml file contains all articles.
+1.1. The raw data is assumed to be a .xml file contains all articles.
 
 In the terminal, type 
 
@@ -15,9 +15,10 @@ In the terminal, type
 , where `raw_data.xml` is the file contains raw data and  `/home/data` is the path to save results.
 It extracts necessary informartion such as abstract and category of an atrticle.
 The output is a set of .txt files where each of them contains extracted data in the same year.
-In the .txt file, each line represents an article by the format of [id/category]\t[text].
+In the .txt file, each line represents an article by the format of [id]\t[text].
+You may need modify the code to extract exactly what you want and be careful of the order of elements.
 
-  1.2. We then need extract texts from .txt files in step 1.2. Also there may exist duplicate articles and they should be removed. 
+1.2. We then need extract texts from .txt files in step 1.2. Also there may exist duplicate articles and they should be removed. 
 
 Run 
 
@@ -39,12 +40,14 @@ To run it in batch mode, use the shell script by
 
 `cat /home/text/* > all_text.txt`,
 
-where `/home/text` is the output in step 1.2 contains a set of text files.
-Be cautious, you need move `/home/text/stat.csv` out of the `/home/text` folder at first.
+where `/home/text` is the output in the step 1.2 which contains a set of text files.
+Be cautious, you need move `/home/text/stat.csv` out of the folder `/home/text` at first.
 
 2.2 Build a vocabulary by running
 
-`python ldaPy/vocabulary.py -f all_text.txt -o all_term.dat`. 
+`python ldaPy/vocabulary.py -f all_text.txt -o all_term.dat`,
+
+in which `all_term.dat` is the file saving the vocabulary.
 
 2.3. Convert the data to the format required by the model, which means each line is in the form of 
 
@@ -52,13 +55,15 @@ Be cautious, you need move `/home/text/stat.csv` out of the `/home/text` folder 
 
 Type
 
-`ldaPy/mult.py -f /home/text/text_1998.txt -t all_term.dat -o /home/mult/foo-mult-1998.dat`.
+`ldaPy/mult.py -f /home/text/text_1998.txt -t all_term.dat -o /home/mult/foo-mult-1998.dat`,
+
+where `/home/text/text_1998.txt` is the text file of year 1998 and `/home/mult/foo-mult-1998.dat` is the output. 
 
 Use the shell scripts to process files in the `/home/text` in batch mode by
 
 `./shell/batch_data.sh /home/text /home/mult all_term.dat`,
 
-where the first parameter is the directory of text files, the second one is the output and the last one is the vocabulary.
+where the first parameter is the directory of text files; the second one is the output and the last one is the vocabulary.
 
 2.4 Calcuate topic_num and alpha parameter.
 
@@ -82,6 +87,7 @@ Train several models by
 
 where the first parameter is the output of step 2.3, the second one is obtained in step 2.4 and the last saves the output.
 The output is a set of folders name as by years, and each of them contains a set of models corresponding to different topic numbers.
+In the folder of each year, you are expected to see a set of folders named as `ldac_output_X`, where `X` represents the level of model, in particular, the zero means the lowest level in the tree of hierachy topic graph and the largest number is the topmost level. 
 
 
 # 3, Computing distances and extracting topics
