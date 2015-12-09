@@ -92,7 +92,12 @@ The output is a set of folders named by years, and each of them contains a set o
 
 # 3, Computing distances and extracting topics
 
-1. `ldaPy/read_prob.py` & `ldaPy/convert_prob.py` save results from .beta and .gamma to .pkl files and convert shape of matrix(so that in the future we do not have to read these large files again and again)
+3.1. Read topic distributions from `final.` 
+
+Read results from `final.beta` and `final.gamma` to .pkl files and convert the shape of the matrix (so that in the future we do not have to read these large files again and again).
+Read the  
+
+`ldaPy/read_prob.py` & `ldaPy/convert_prob.py` save 
 2. `graph/top_term.py` obtain top terms of topics
 3. `graph/compute_distance.py` compute distances between topics
 4. `backend/graph.py` draw graph
