@@ -32,7 +32,7 @@ def vocabulary(data_iterator):
         if i % 10000 == 0:
             print i
     
-    return all_term
+    return all_term, len(all_term)
 
 '''
 ### read data from a directory
@@ -70,18 +70,16 @@ if __name__ == "__main__":
     (options, args) = optparser.parse_args()
     
     if options.input is None:
-            inFile = sys.stdin
-    elif options.input is not None:
-            inFile = ioFile.dataFromFile(options.input)
-    else:
             print 'No filename specified, system with exit\n'
             sys.exit('System will exit')
+    elif options.input is not None:
+            inFile = ioFile.dataFromFile(options.input)
             
     if options.output is None:
             outFile = 'all_term.dat'
     elif options.output is not None:
             outFile = options.output
             
-    all_term = vocabulary(inFile)
-    ioFile.termToFile(all_term, outFile)
+    all_term, total_num  = vocabulary(inFile)
+    ioFile.termToFile(all_term, str(total_num) + '_' + outFile)
             

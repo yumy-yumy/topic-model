@@ -74,7 +74,7 @@ if __name__ == "__main__":
             sys.exit('System will exit')
             
     if options.output is None:
-            outFile = 'clf_topic.pkl'
+            outFile = 'distance.pkl'
     elif options.output is not None:
             outFile = options.output            
             
