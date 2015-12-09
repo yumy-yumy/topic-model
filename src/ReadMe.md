@@ -12,7 +12,7 @@ In the terminal, type
 
 `python preprocess/preXml.py -f raw_data.xml -o /home/data` 
 
-, where `raw_data.xml` is the file contains raw data and  `/home/data` is the outpath to save results.
+, where `raw_data.xml` is the file contains raw data and  `/home/data` is the path to save results.
 It extracts necessary informartion such as abstract and category of an atrticle.
 The output is a set of .txt files where each of them contains extracted data in the same year.
 In the .txt file, each line represents an article by the format of [id/category]\t[text].
@@ -39,8 +39,8 @@ To run it in batch mode, use the shell script by
 
 `cat /home/text/* > all_text.txt`,
 
-where `/home/text` is the outpath in step 1.2 contains a set of text files.
-Be cautious, you need to move `/home/text/stat.csv` out of the `/home/text` folder at first.
+where `/home/text` is the output in step 1.2 contains a set of text files.
+Be cautious, you need move `/home/text/stat.csv` out of the `/home/text` folder at first.
 
 2.2 Build a vocabulary by running
 
@@ -58,17 +58,17 @@ Use the shell scripts to process files in the `/home/text` in batch mode by
 
 `./shell/batch_data.sh /home/text /home/mult all_term.dat`,
 
-the first parameter is the directory of text files, the second one is the output.
+where the first parameter is the directory of text files, the second one is the output and the last one is the vocabulary.
 
 2.4 Calcuate topic_num and alpha parameter.
 
 Generate sequences of topic numbers for every year by
 
-`python ldaPy/topic_num_seq.py -f stat.csv -o /home/topic num`,
+`python ldaPy/topic_num_seq.py -f stat.csv -o /home/topic_num`,
 
 where `stat.csv` is created in step 1.2.
-The outpaht `/home/topic num` contains a set of .csv files and they are named as `topic_num_xxxx.csv`, for example `topic_num_1998.csv`.
-And each line of the .csv file is in the format of `[topic num] [alpha]`.
+The folder `/home/topic_num` contains a set of .csv files and they are named as `topic_num_xxxx.csv`, for example `topic_num_1998.csv`.
+And each line in the .csv file is in the format of `[topic_num] [alpha]`.
 
 2.5. Train LDA [Blei-Lab/lda-c](https://github.com/Blei-Lab/lda-c).
 
@@ -78,7 +78,10 @@ Train for once by
 
 Train several models by
 
-`./shell/batch_train.sh /home/mult /home/topic num`.
+`./shell/batch_train.sh /home/mult /home/topic_num /lda_model`,
+
+where the first parameter is the output of step 2.3, the second one is obtained in step 2.4 and the last saves the output.
+The output is a set of folders name as by years, and each of them contains a set of models corresponding to different topic numbers.
 
 
 # 3, Computing distances and extracting topics
