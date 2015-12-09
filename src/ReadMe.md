@@ -43,7 +43,7 @@ To run it in batch mode, use the shell script by
 where `/home/text` is the output in the step 1.2 which contains a set of text files.
 Be cautious, you need move `/home/text/stat.csv` out of the folder `/home/text` at first.
 
-2.2 Build a vocabulary by running
+2.2. Build a vocabulary by running
 
 `python ldaPy/vocabulary.py -f all_text.txt -o all_term.dat`,
 
@@ -65,7 +65,7 @@ Use the shell scripts to process files in the `/home/text` in batch mode by
 
 where the first parameter is the directory of text files; the second one is the output and the last one is the vocabulary.
 
-2.4 Calcuate topic_num and alpha parameter.
+2.4. Calcuate topic_num and alpha parameter.
 
 Generate sequences of topic numbers for every year by
 
@@ -90,7 +90,7 @@ where the first parameter is the output of step 2.3; the second one is obtained 
 The output is a set of folders named by years, and each of them contains a set of models corresponding to different topic numbers. You are expected to see a set of folders named as `ldac_output_X`, where `X` represents the level of model; in particular, the zero means the lowest level in the tree of hierachy topic graph and the largest number is the topmost level. 
 
 
-# 3, Computing distances and extracting topics
+# 3. Computing distances and extracting topics
 
 3.1. Read topic distributions from `final.beta` in the step 2.5.
 Run
@@ -101,21 +101,30 @@ Run
 
 Run
 
-``
+`python ldaPy/convert_prob.py -f /home/lda_model/1998/prob/prob_0.pkl -n 15591 -o /home/lda_model/1998/prob/convert_prob_0.pkl`,
 
-Read results from `final.beta` and `final.gamma` to .pkl files and convert the shape of the matrix (so that in the future we do not have to read these large files again and again).
+which adjuts the shape of the matrix.
+The second parameter is the size of the vocabulary, probably you need change it.
 
-2. `graph/top_term.py` obtain top terms of topics
-3. `graph/compute_distance.py` compute distances between topics
-4. `backend/graph.py` draw graph
-5.  `graph/topic_of_class.py` count topics of each category for all years
+In the batch mode which also combines these two steps together, use
+
+`shell/prob.sh /home/lda_model /home/topic_num`,
+
+where the first parameter is the result of the step 2.5 and the second one is the folder from the step 2.4.
+The script creates a folder named `prob` under each model directory and put results there.
+
+3.2. Obtain topics.
+
+Run
+
+`python graph/topic_term.py -f /home/lda_model/1998/prob/prob_0.pkl -t /home/all_term.dat -o /home/lda_model/1998/topic_0.pkl`.
+
+3.3. Compute distances between topics.
+Run
+
+`python graph/compute_distance.py -f /home/lda_model/1998/prob/convert_prob_0.pkl -g /home/lda_model/1998/prob/convert_prob_1.pkl`.
+ 
+3.4.  `graph/topic_of_class.py` count topics of each category for all years
 
 
-
-
-
-
-
-
-
-
+BTW, the autohr strongly recommends using shell scripts as they make life easier.
