@@ -29,7 +29,9 @@ A `stat.csv` file is created if it does not exist and a line in the format of `[
 
 To run it in batch mode, use the shell script by
 
-`./shell/text.sh /home/data /home/text`.
+`./shell/text.sh /home/data /home/text`,
+ 
+ where the first parameter is the input directory and the second one is the output directory.
 
 # 2. Training LDA Model
 
@@ -39,7 +41,6 @@ To run it in batch mode, use the shell script by
 
 where `/home/text` is the outpath in step 1.2 contains a set of text files.
 Be cautious, you need to move `/home/text/stat.csv` out of the `/home/text` folder at first.
-
 
 2.2 Build a vocabulary by running
 
@@ -55,7 +56,9 @@ Type
 
 Use the shell scripts to process files in the `/home/text` in batch mode by
 
-`./shell/batch_data.sh /home/text /home/mult all_term.dat`.
+`./shell/batch_data.sh /home/text /home/mult all_term.dat`,
+
+the first parameter is the directory of text files, the second one is the output.
 
 2.4 Calcuate topic_num and alpha parameter.
 
