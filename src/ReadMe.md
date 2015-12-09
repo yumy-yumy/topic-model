@@ -83,7 +83,7 @@ Train for once by
 
 Train several models by
 
-`./shell/batch_train.sh /home/mult /home/topic_num /lda_model`,
+`./shell/batch_train.sh /home/mult /home/topic_num /home/lda_model`,
 
 where the first parameter is the output of step 2.3; the second one is obtained in step 2.4 and the last one is the path of the output.
 
@@ -92,12 +92,19 @@ The output is a set of folders named by years, and each of them contains a set o
 
 # 3, Computing distances and extracting topics
 
-3.1. Read topic distributions from `final.` 
+3.1. Read topic distributions from `final.beta` in the step 2.5.
+Run
+
+`python ldaPy/read_prob.py -f /home/lda_model/1998/ldac_output_0/final.beta -o /home/lda_model/1998/prob/prob_0.pkl`
+
+, which reads the probability matrix from `/home/lda_model/1998/ldac_output_0/final.beta` and saves it to `/home/lda_model/1998/prob/prob_0.pkl`.
+
+Run
+
+``
 
 Read results from `final.beta` and `final.gamma` to .pkl files and convert the shape of the matrix (so that in the future we do not have to read these large files again and again).
-Read the  
 
-`ldaPy/read_prob.py` & `ldaPy/convert_prob.py` save 
 2. `graph/top_term.py` obtain top terms of topics
 3. `graph/compute_distance.py` compute distances between topics
 4. `backend/graph.py` draw graph
