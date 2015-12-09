@@ -1,9 +1,10 @@
 #!/bin/bash
-# train LDA for all levels(htm) and all years(dtm)
+# train LDA
 # excuate in lda-c foler
 
-dirpath=$1'/*'
+file_path=$1'/*'
 stat_path=$2'/*'
+outpath=$3
 
 i=0
 for file in $stat_path; do
@@ -12,19 +13,20 @@ for file in $stat_path; do
 done 
 
 i=0
-for dir in $dirpath; do		
-	echo $dir
-	file=$dir'/foo-mult.dat'
+for file in $file_path; do		
 	echo $file
+	ext=${file##*.}
+	file_name=$(basename $file .$ext)
+	year=${file_name##*-}
+	model_path="$outpath/$year"
+	mkdir $model_path
 	IFS=',' 
-	j=1
+	j=0
 	while read num alpha; do
-		if [ "$j" -gt 2 ]; then
-			echo $num
-			echo $dir"/ldac_output_$j/"
-			#./lda est $alpha  $num 'settings.txt' $file 'random' $dir"/ldac_output_$j/"
-		fi
+		echo $num
+		echo "$model_path/ldac_output_$j/"
+		#./lda est $alpha  $num 'settings.txt' $file 'random' "$model_path/ldac_output_$j/"
 		(( j += 1 ))
-	done <  ${stat_file[$i]}	
+	done <  ${stat_file[$i]}
 	(( i += 1 ))
 done

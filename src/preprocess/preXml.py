@@ -45,14 +45,17 @@ def splitByYear(fname, outpath):
     j = 0
     
     for event, elem in context:
+        # get date
         if elem.tag.count("created"):
             year = elem.text[:4]
             fname = outpath + '/all_' + year + '.txt'
             i += 1
             if i % 10000 == 0:
                 print i
+        # get text
         elif elem.tag.count("text"):
             text = elem.text + '\n'  
+        # get id
         elif elem.tag.count('id'):
             text_id = elem.text+'\t'
         '''
