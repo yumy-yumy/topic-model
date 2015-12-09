@@ -136,7 +136,7 @@ The output is a distance matrix where each element (i,j) represents the distance
 
 In the batch mode, for dynamic time graph, use
 
-`shell/distances.sh /home/lda_model /home/dtm/distance`,
+`shell/distances.sh /home/lda_model /home/dtm`,
 
 which computes topics in the topmost level from two different years and saves results in `/home/dtm/distance`.
 
