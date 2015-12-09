@@ -145,8 +145,31 @@ For hierarchy topic graph, use
 `shell/distance.sh /home/lda_model`,
 
 it creates a folder `topic` under each model and save results there.
- 
-3.4.  `graph/topic_of_class.py` count topics of each category for all years
+
+# 4. Count topics of categories
+
+4.1. Read document topic distributions from `final.gamma` in the step 2.5.
+Similar to the step 3.1, type
+
+`python ldaPy/read_prob.py -f /home/lda_model/1998/ldac_output_2/final.gamma -o /home/infer/prob_1998.pkl`.
+
+In the batch mode, use
+
+`shell/infer_prob.sh /home/lda_model /home/infer`,
+
+where the first paramter is the folder cotains models and the second is the output path.
+
+4.2. Get category information of documents.
+Type the command,
+
+`python classification/set_classification.py -f /home/data/data_1998.txt -a `.
+
+4.3. Build a dictionary to transalte categories' short names to their full names.
+
+4.4. Count topics of categories for all years.
+
+
+`graph/topic_of_class.py` 
 
 
 BTW, the autohr strongly recommends using shell scripts as they make life easier.
