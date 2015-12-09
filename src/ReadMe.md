@@ -85,9 +85,9 @@ Train several models by
 
 `./shell/batch_train.sh /home/mult /home/topic_num /lda_model`,
 
-where the first parameter is the output of step 2.3, the second one is obtained in step 2.4 and the last saves the output.
-The output is a set of folders name as by years, and each of them contains a set of models corresponding to different topic numbers.
-In the folder of each year, you are expected to see a set of folders named as `ldac_output_X`, where `X` represents the level of model, in particular, the zero means the lowest level in the tree of hierachy topic graph and the largest number is the topmost level. 
+where the first parameter is the output of step 2.3; the second one is obtained in step 2.4 and the last one is the path of the output.
+
+The output is a set of folders name by years, and each of them contains a set of models corresponding to different topic numbers. You are expected to see a set of folders named as `ldac_output_X`, where `X` represents the level of model; in particular, the zero means the lowest level in the tree of hierachy topic graph and the largest number is the topmost level. 
 
 
 # 3, Computing distances and extracting topics
