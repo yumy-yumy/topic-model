@@ -182,7 +182,7 @@ For acm-class, type
 
 `python classification/set_classification.py -f /home/text/text_1998.txt -r /home/data/data_1998.txt -c acm-class -d /home/class_topic/acm-class_dict.pkl -o /home/class_topic/acm-class/acm-class_1998.txt`.
 
-The output is a ile in extension .pkl contains a dictionary whose keys are textes of articles and values are their correspoding categories. 
+The output is a file in extension .pkl contains a dictionary whose keys are textes of articles and values are their correspoding categories. 
 
 4.4. Count topics of categories for all years.
 For arxiv-category, type
