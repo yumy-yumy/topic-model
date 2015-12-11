@@ -159,6 +159,7 @@ In the batch mode, use
 `shell/infer_prob.sh /home/lda_model /home/infer`,
 
 where the first paramter is the folder cotains models and the second is the output path.
+Here, we use models of the topmost level from all years. For example, in 1998, the topmost model is saved in the folder `/lda_model/1998/ldac_output_2`.
 
 4.2. Build a dictionary to transalte categories' short names to their full names.
 For arxiv-category, type
@@ -169,6 +170,8 @@ For acm-class, type
 
 `python classification/acm_class_dict.py -f /home/class_topic/acmccs98-1.2.3.xml -o /home/class_topic/acm-class_dict.pkl`.
 
+The output is a file in extension .pkl which contains a dictionary whose keys are categories' short names and values are their full names.
+
 4.3. Get category information of documents.
 
 For arxiv-category, type the command,
@@ -177,7 +180,9 @@ For arxiv-category, type the command,
 
 For acm-class, type
 
-`python classification/set_classification.py -f /home/text/text_1998.txt -r /home/data/data_1998.txt -c acm-class -d /home/class_topic/acm-class_dict.pkl -o /home/class_topic/acm-class/acm-class_1998.txt`
+`python classification/set_classification.py -f /home/text/text_1998.txt -r /home/data/data_1998.txt -c acm-class -d /home/class_topic/acm-class_dict.pkl -o /home/class_topic/acm-class/acm-class_1998.txt`.
+
+The output is a ile in extension .pkl contains a dictionary whose keys are textes of articles and values are their correspoding categories. 
 
 4.4. Count topics of categories for all years.
 For arxiv-category, type
