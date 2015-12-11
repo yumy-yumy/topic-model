@@ -16,7 +16,7 @@ import numpy as np
 from collections import Counter
 
 import ioFile
-import pathTraverse
+from src.backend import fileSys
 
 
 def classificationOfDocument(data_iterator, clf_dict, fun):
@@ -78,11 +78,11 @@ def plotCategory(categories, categories_dict):
         
     print convert_categories
     
-def topicOfClassificationForAllYear(probDir, topicDir, classDir, clf_dict, fun):
+def topicOfClassificationForAllYear(probDir, modelDir, classDir, clf_dict, fun):
 
-    probFiles = pathTraverse.traverseDirectory(probDir)
-    topicFiles = pathTraverse.traverseDirectory(topicDir)
-    classFiles = pathTraverse.traverseDirectory(classDir)
+    probFiles = fileSys.traverseDirectory(probDir)
+    topicFiles = fileSys.traverseTopicDirecotry(modelDir, 1)
+    classFiles = fileSys.traverseDirectory(classDir)
     
     N = len(probFiles)
     if len(topicFiles) != N or len(classFiles) != N:
@@ -157,8 +157,8 @@ if __name__ == "__main__":
                          dest='prob',
                          help='Directory',
                          default=None)
-    optparser.add_option('-t', '--topicDir',
-                         dest='topic',
+    optparser.add_option('-m', '--modelDir',
+                         dest='model',
                          help='Directory',
                          default=None)
     optparser.add_option('-f', '--className',
@@ -186,11 +186,11 @@ if __name__ == "__main__":
     elif options.prob is not None:
             probDir = options.prob
 
-    if options.topic is None:
+    if options.model is None:
             print 'No topic filename specified, system with exit\n'
             sys.exit('System will exit')
-    elif options.topic is not None:
-            topicDir = options.topic
+    elif options.model is not None:
+            modelDir = options.model
             
     if options.class_name is None:
             print 'No name of the category specified, system with exit\n'
@@ -224,7 +224,7 @@ if __name__ == "__main__":
     elif options.output is not None:
             outFile = options.output
     
-    all_clf_topic = topicOfClassificationForAllYear(probDir, topicDir, classDir, clf_dict, fun)
+    all_clf_topic = topicOfClassificationForAllYear(probDir, modelDir, classDir, clf_dict, fun)
     
     ioFile.save_object(all_clf_topic, outFile)
 
