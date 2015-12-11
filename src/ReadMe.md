@@ -176,18 +176,40 @@ The output is a file in extension .pkl which contains a dictionary whose keys ar
 
 For arxiv-category, type the command,
 
-`python classification/set_classification.py -f /home/text/text_1998.txt -r /home/data/data_1998.txt -c arxiv-category -d /home/class_topic/arxiv-category_dict.pkl -o /home/class_topic/arxiv-category/arxiv-category_1998.txt`.
+`python classification/set_classification.py -f /home/text/text_1998.txt -r /home/data/data_1998.txt -c arxiv-category -o /home/class_topic/arxiv-category/arxiv-category_1998.txt`,
+
+where `-f` is the text file in the step 1.2;
+`-r` is the data file containing both category information and texts in the step 1.1;
+`-c` is the name of classification system i.e. arxiv-category or acm-class,
+`-o` is the output path.
 
 For acm-class, type
 
-`python classification/set_classification.py -f /home/text/text_1998.txt -r /home/data/data_1998.txt -c acm-class -d /home/class_topic/acm-class_dict.pkl -o /home/class_topic/acm-class/acm-class_1998.txt`.
+`python classification/set_classification.py -f /home/text/text_1998.txt -r /home/data/data_1998.txt -c acm-class -d /home/class_topic/acm-class_dict.pkl -o /home/class_topic/acm-class/acm-class_1998.txt`,
 
-The output is a file in extension .pkl contains a dictionary whose keys are textes of articles and values are their correspoding categories. 
+where paramters are similar to those for arxiv-category but we need an extra one `-d` representing the dictionary of categories in the step 4.2.
+
+The output is a file in extension .pkl contains a dictionary whose keys are textes of articles and values are their correspoding categories.
+
+In the batch mode,  use
+
+`shell/set_classification.sh /home/text /home/data /home/class_topic/arxiv-category`.
+
+The first parameter is the directory contains text files;
+the second one is the directory contains data files;
+the third one is the output directory;
+and for acm-class, we need the forth paramter which is the dictionary of categories.
 
 4.4. Count topics of categories for all years.
 For arxiv-category, type
 
-`python classification/topic_of_class.py -p /home/infer -t -f arxiv-category -c /home/class_topic/arxiv-category -d /home/class_topic/arxiv-category_dict.pkl -o class_topic_arxiv-category.pkl`. 
+`python classification/topic_of_class.py -p /home/infer -m /homde/lda_model -f arxiv-category -c /home/class_topic/arxiv-category -d /home/class_topic/arxiv-category_dict.pkl -o /home/class_topic/class_topic_arxiv-category.pkl`, 
 
+where `-p` is the directory contains posterior distributions in the step 4.1;
+`-m` is the directory contains models in the step 2.5;
+`-f` is the name of classification system i.e. arxiv-category or acm-class;
+`-c` is the directory contains category information of articles in the step 4.3;
+`-d` is the dictionary of classification system;
+`-o` is the filename recording the output.
 
 BTW, the autohr strongly recommends using shell scripts as they make life easier.
