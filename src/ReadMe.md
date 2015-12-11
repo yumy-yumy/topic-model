@@ -212,4 +212,6 @@ where `-p` is the directory contains posterior distributions in the step 4.1;
 `-d` is the dictionary of classification system;
 `-o` is the filename recording the output.
 
+The output is a two-level dictionary which is in the format of dict[year][category_name]=[a list of topics], and the topics in the list are repeatable.
+
 BTW, the autohr strongly recommends using shell scripts as they make life easier.
