@@ -48,6 +48,7 @@ Be cautious, you need move `/home/text/stat.csv` out of the folder `/home/text` 
 `python ldaPy/vocabulary.py -f all_text.txt -o all_term.dat`,
 
 in which `all_term.dat` is the file saving the vocabulary.
+Please write down the total number of terms because you will need it in the step 3.1.
 
 2.3. Convert the data to the format required by the model, which means each line is in the form of 
 
