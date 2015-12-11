@@ -11,10 +11,18 @@ if __name__ == "__main__":
                          dest='input',
                          help='fileName',
                          default=None)
-    optparser.add_option('-a', '--referenceFile',
-                         dest='all',
+    optparser.add_option('-r', '--referenceFile',
+                         dest='reference',
                          help='fileName',
-                         default=None)    
+                         default=None)
+    optparser.add_option('-c', '--className',
+                         dest='class_name',
+                         help='className',
+                         default=None)
+    optparser.add_option('-d', '--classDictName',
+                         dest='clf_dict',
+                         help='fileName',
+                         default=None)     
     optparser.add_option('-o', '--outputFile',
                          dest='output',
                          help='fileName',
@@ -22,32 +30,47 @@ if __name__ == "__main__":
         
     (options, args) = optparser.parse_args()
     
-    #fun=0, arxiv_category; fun=1, acm_class
-    fun = 0
-    year = options.input[-8:-4]
-    
     if options.input is None:
-            print 'No input filename specified, system with exit\n'
+            print 'No text filename specified, system with exit\n'
             sys.exit('System will exit')
     elif options.input is not None:
             inFile = ioFile.dataFromFile(options.input)
 
-    if options.all is None:
+    if options.reference is None:
             print 'No reference filename specified, system with exit\n'
             sys.exit('System will exit')
-    elif options.all is not None:
-            inFile_all = ioFile.dataFromFile(options.all)
+    elif options.reference is not None:
+            inFile_ref = ioFile.dataFromFile(options.reference)
+           
+    if options.class_name is None:
+            print 'No name of the category specified, system with exit\n'
+            sys.exit('System will exit')        
+    else:
+            if options.class_name == 'arxiv-category':
+                fun = 0
+            elif options.class_name == 'acm-class':
+                fun = 1
+            else:
+                print 'Name of the category is incorrect, system with exit\n'
+                sys.exit('System will exit')                 
+                
+    if options.clf_dict is None:
+        if options.class_name == 'acm-class':
+            print 'No class dict filename specified, system with exit\n'
+            sys.exit('System will exit')
+    else:
+        acm_class_dict = ioFile.load_object(options.clf_dict)
+ 
     if options.output is None:
+        year = options.input[-8:-4]
         if fun == 0:
-            outFile = 'category_' + year + '.txt'
+            outFile = 'arxiv-category_' + year + '.txt'
         elif fun == 1:
             outFile = 'acm-class_' + year + '.txt'
     elif options.output is not None:
-            outFile = options.output    
-    
-    #acm_class_dict = ioFile.load_object("/home/pzwang/data/lda_new/topic_class/acm_class_dict.pkl")
+            outFile = options.output
         
-    data_iterator = inFile_all
+    data_iterator = inFile_ref
 
     clf_dict = dict()
     for line in data_iterator:
@@ -94,7 +117,9 @@ if __name__ == "__main__":
         else:
             clf_dict[line[2]] = clf
 
-
+    '''
+    # keep the order of text is the same as the order of posterior matrix
     data_iterator = inFile
     for line in data_iterator:
         ioFile.dataToFile(clf_dict[line]+'\n', outFile)
+    '''

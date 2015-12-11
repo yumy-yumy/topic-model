@@ -84,7 +84,7 @@ if __name__ == "__main__":
             sys.exit('System will exit')
             
     if options.output is None:
-            outFile = "acm_class_dict.pkl"
+            outFile = "acm-class_dict.pkl"
     elif options.output is not None:
             outFile = options.output             
             

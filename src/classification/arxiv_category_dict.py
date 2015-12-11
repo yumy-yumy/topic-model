@@ -25,7 +25,7 @@ if __name__ == "__main__":
             sys.exit('System will exit')
             
     if options.output is None:
-            outFile = "category_dict.pkl"
+            outFile = "arxiv-category_dict.pkl"
     elif options.output is not None:
             outFile = options.output
              
