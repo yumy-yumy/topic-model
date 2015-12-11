@@ -226,7 +226,7 @@ if __name__ == "__main__":
     
     all_clf_topic = topicOfClassificationForAllYear(probDir, topicDir, classDir, clf_dict, fun)
     
-    #ioFile.save_object(all_clf_topic, "class_topic_arxiv-category.pkl")
+    ioFile.save_object(all_clf_topic, outFile)
 
     
     

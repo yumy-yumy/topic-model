@@ -117,9 +117,8 @@ if __name__ == "__main__":
         else:
             clf_dict[line[2]] = clf
 
-    '''
+
     # keep the order of text is the same as the order of posterior matrix
     data_iterator = inFile
     for line in data_iterator:
         ioFile.dataToFile(clf_dict[line]+'\n', outFile)
-    '''
