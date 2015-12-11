@@ -32,7 +32,9 @@ def vocabulary(data_iterator):
         if i % 10000 == 0:
             print i
     
-    return all_term, len(all_term)
+    print "the size of vocabulary is " + str(len(all_term))
+    
+    return all_term
 
 '''
 ### read data from a directory
@@ -80,6 +82,6 @@ if __name__ == "__main__":
     elif options.output is not None:
             outFile = options.output
             
-    all_term, total_num  = vocabulary(inFile)
-    ioFile.termToFile(all_term, str(total_num) + '_' + outFile)
+    all_term = vocabulary(inFile)
+    ioFile.termToFile(all_term, outFile)
             

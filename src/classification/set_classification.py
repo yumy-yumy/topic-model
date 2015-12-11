@@ -23,7 +23,7 @@ if __name__ == "__main__":
     (options, args) = optparser.parse_args()
     
     #fun=0, arxiv_category; fun=1, acm_class
-    fun = 1
+    fun = 0
     year = options.input[-8:-4]
     
     if options.input is None:
@@ -45,7 +45,7 @@ if __name__ == "__main__":
     elif options.output is not None:
             outFile = options.output    
     
-    acm_class_dict = ioFile.load_object("/home/pzwang/data/lda_new/topic_class/acm_class_dict.pkl")
+    #acm_class_dict = ioFile.load_object("/home/pzwang/data/lda_new/topic_class/acm_class_dict.pkl")
         
     data_iterator = inFile_all
 

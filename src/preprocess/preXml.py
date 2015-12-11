@@ -42,7 +42,7 @@ def splitByYear(fname, outpath):
     start = time()
     context = ET.iterparse(fname, events=('end',))
     i = 0
-    j = 0
+    #j = 0
     
     for event, elem in context:
         # get date
@@ -55,10 +55,6 @@ def splitByYear(fname, outpath):
         # get text
         elif elem.tag.count("text"):
             text = elem.text + '\n'  
-        # get id
-        elif elem.tag.count('id'):
-            text_id = elem.text+'\t'
-        '''
         elif elem.tag.count("categories"):
             ioFile.dataToFile(elem.text+'\t', fname)
             
@@ -68,11 +64,16 @@ def splitByYear(fname, outpath):
             if elem.text is not None:
                 ioFile.dataToFile(elem.text+'\t', fname)
             else:
-                ioFile.dataToFile('\t', fname)
+                ioFile.dataToFile('\t', fname)        
         '''
+        # get id
+        elif elem.tag.count('id'):
+            text_id = elem.text+'\t'
+
         if i == j+1:
             ioFile.dataToFile(text_id+text, fname)
             j = i
+        '''
         
         # clear elements to empty memory
         while elem.getprevious() is not None:
