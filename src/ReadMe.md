@@ -160,17 +160,29 @@ In the batch mode, use
 
 where the first paramter is the folder cotains models and the second is the output path.
 
-4.2. Get category information of documents.
-Type the command,
+4.2. Build a dictionary to transalte categories' short names to their full names.
+For arxiv-category, type
 
-`python classification/set_classification.py -f /home/data/data_1998.txt -a `.
+`python classification/arxiv_category_dict.py -f /home/class_topic/arxiv_category.txt -o /home/class_topic/arxiv-category_dict.pkl`.
 
-4.3. Build a dictionary to transalte categories' short names to their full names.
+For acm-class, type
+
+`python classification/acm_class_dict.py -f /home/class_topic/acmccs98-1.2.3.xml -o /home/class_topic/acm-class_dict.pkl`.
+
+4.3. Get category information of documents.
+
+For arxiv-category, type the command,
+
+`python classification/set_classification.py -f /home/text/text_1998.txt -r /home/data/data_1998.txt -c arxiv-category -d /home/class_topic/arxiv-category_dict.pkl -o /home/class_topic/arxiv-category/arxiv-category_1998.txt`.
+
+For acm-class, type
+
+`python classification/set_classification.py -f /home/text/text_1998.txt -r /home/data/data_1998.txt -c acm-class -d /home/class_topic/acm-class_dict.pkl -o /home/class_topic/acm-class/acm-class_1998.txt`
 
 4.4. Count topics of categories for all years.
+For arxiv-category, type
 
-
-`graph/topic_of_class.py` 
+`python classification/topic_of_class.py -p /home/infer -t -f arxiv-category -c /home/class_topic/arxiv-category -d /home/class_topic/arxiv-category_dict.pkl -o class_topic_arxiv-category.pkl`. 
 
 
 BTW, the autohr strongly recommends using shell scripts as they make life easier.
