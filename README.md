@@ -24,8 +24,9 @@ All the templates files are located in the `templates` folder.
 # Running
 
 1. Put data to somewhere you want and set it as the `root_path` in `src/backend/topic.py`.
-2. Go to the directory of where you put the code.
-3. Type command `virtualenv env`.
-4. Type command `source env/bin/active`. For Windows, run the command `env/Scripts/active.bat`.
-5. Type command `python app.py`.
-6. Click the link in the prompt to open the webpage. By default, it is `http://127.0.0.1:5000/`.
+2. Set `distance_constraint` in `src/backend/graph.py`.
+3. Go to the directory of where you put the code.
+4. Type command `virtualenv env`.
+5. Type command `source env/bin/active`. For Windows, run the command `env/Scripts/active.bat`.
+6. Type command `python app.py`.
+7. Click the link in the prompt to open the webpage. By default, it is `http://127.0.0.1:5000/`.
