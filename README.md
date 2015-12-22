@@ -24,7 +24,7 @@ All the templates files are located in the `templates` folder.
 # Running
 
 1. Put data to somewhere you want and set it as the `root_path` in `src/backend/topic.py`.
-2. Set `distance_constraint` in `src/backend/graph.py`.
+2. Set `distance_constraint` in `src/backend/graph.py`. (For All dataset, it is 0.5, for CS dataset, it is 0.65)
 3. Go to the directory of where you put the code.
 4. Type command `virtualenv env`.
 5. Type command `source env/bin/active`. For Windows, run the command `env/Scripts/active.bat`.
