@@ -29,6 +29,7 @@ def traverseTopicDirecotry(dirpath, fun, years=None):
         year = int(dirname)
         if years is None or year in years:
             filenames = traverseDirectory(path.join(dirpath, dirname, 'topic'))
+            
             if fun == 0:
                 full_fnames.append(filenames[0])
             elif fun == 1:

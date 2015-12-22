@@ -2,13 +2,15 @@ import numpy as np
 from numpy import cumsum
 from src import ioFile
 
-distance_constraint = 0.5
+distance_constraint = 0.65
 
 def createNode(filenames, clf_topic_stat=None):
     nodes = []
+    topic_num = []
     i = 0
     for fname in filenames:
         topics = ioFile.load_object(fname)
+        topic_num.append(len(topics))
         nodes.append({"name":''})
         if clf_topic_stat == None:
             for topic in topics:
@@ -20,7 +22,7 @@ def createNode(filenames, clf_topic_stat=None):
             i += 1
 
     #print "finish creating nodes"
-    return nodes
+    return nodes, np.array(topic_num)
 
 '''
 fun=0, horizontal graph; fun=1, vertical graph; fun=2, graph for class
@@ -106,12 +108,13 @@ def topicNum(inFile, fun):
 
     return np.array(num)
 
-def createGraph(topicFiles, distanceFiles, topic_num, fun, clf_topic_stat=None):
-    nodes = createNode(topicFiles, clf_topic_stat)
+def createGraph(topicFiles, distanceFiles, fun, clf_topic_stat=None, topic_num=None):
     if fun < 2:
-        topic_num = topicNum(topic_num, fun)
+        nodes, topic_num = createNode(topicFiles, clf_topic_stat)
     elif fun == 2:
+        nodes, num = createNode(topicFiles, clf_topic_stat)
         topic_num = np.array(topic_num)
+
     links = createLink(distanceFiles, topic_num, fun, clf_topic_stat)
     links = addVirtualLink(links, topic_num)
 

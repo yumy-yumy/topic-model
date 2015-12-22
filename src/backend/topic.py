@@ -12,14 +12,11 @@ def topics_from_to(start, end):
 
     topicFiles = fileSys.traverseTopicDirecotry(model_path, 1, years)
 
-    # fill the path where topic_num.csv is stored
-    topic_num_dirpath = path.join(root_path, 'topic_num')
-    topic_num_file = fileSys.traverseDirectory(topic_num_dirpath, years)
     # fill the path where distances are stored
     clf_topic = path.join(root_path, 'dtm/distance')
     distanceFiles = fileSys.traverseDistanceDirectory(clf_topic, years)
 
-    topic_graph = graph.createGraph(topicFiles, distanceFiles, topic_num_file, 0)
+    topic_graph = graph.createGraph(topicFiles, distanceFiles, 0)
 
     return topic_graph
 
@@ -57,7 +54,7 @@ def topics_for_class(class_mode, class_name, start, end):
     clf_topic = path.join(root_path, 'class_topic/distance')
     distanceFiles = fileSys.traverseDistanceDirectory(clf_topic, list(years))
 
-    topic_graph = graph.createGraph(topicFiles, distanceFiles, topic_num, 2, clf_topic_stat)
+    topic_graph = graph.createGraph(topicFiles, distanceFiles, 2, clf_topic_stat, topic_num)
 
     return topic_graph, years
 
