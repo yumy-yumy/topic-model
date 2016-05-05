@@ -24,8 +24,8 @@ Run
 
 `python preprocess/extract_text.py -f data_1998.txt -o /home/text`
 
-, where `data_1998.txt` is the input .txt file containing articles in 1998 and similary, `/home/text` is the output path.
-The output is a `text_1998.txt` file only contains texts of articles without duplicates. 
+, where `-f` is the input .txt file containing articles in 1998 and similary, `-o` is the output path.
+The output is a file named as `text_1998.txt` only contains texts of articles without duplicates. 
 A `stat.csv` file is created if it does not exist and a line in the format of `[1998] [the number of articles]` is added to this file.
 
 To run it in batch mode, use the shell script by
